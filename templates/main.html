@@ -1,0 +1,33 @@
+{% extends "template.html" %}
+{% block content %}
+<h1 class="title">Welcome to GameIT</h1>
+<br />
+<br />
+    <div id="controlPanel" class="panel ">
+    <h5>Dashboard: </h5>
+        <div class="row">
+            <div class="columns three buttonIcon offset-by-two">
+                <a href ="#" title="Manage The Games In The System"><span>Manage Games</span> <br>
+                <i class="fa fa-gamepad"></i>
+                </a>
+            </div>
+            <div class="columns three buttonIcon">
+                <a href ="#" title="Manage The users In The System"><span>Manage Users</span> <br>
+                <i class="fa fa-users"></i>
+                </a>
+            </div>
+            <div class="columns three buttonIcon">
+                <a href ="#" title="Manage The purchase In The System"><span>Manage Purchases</span> <br>
+                <i class="fa fa-money"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="quickStats" class="panel">
+    <h5>Quick Stats: </h5>
+        <ul>
+           <li>There are {{ numOfGames }} <strong>Games</strong> in the system </li>
+           <li>There are {{ numOfUsers }} <strong>Users</strong> in the system</li>
+        </ul>
+    </div>
+{% endblock %}

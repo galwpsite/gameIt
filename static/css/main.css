@@ -1,0 +1,40 @@
+body {
+    background-color: #3F3152;
+}
+.container {
+    background-color: #fff;
+    padding:1% 1%;
+}
+h1,h2,h3,h4,h5 {
+    font-weight: bold;
+}
+h1.title {
+    text-align: center;
+}
+footer {
+    text-align: center;
+}
+.panel {
+    margin: 50px 0;
+}
+
+#controlPanel.panel{
+    margin: 0px 0;
+}
+
+#controlPanel .buttonIcon a{
+    color:black;
+    text-decoration: none;
+}
+#controlPanel .buttonIcon a:hover{
+    color:#FF1D36;
+    transition-duration: 0.8s;
+    text-decoration: none;
+}
+#controlPanel .buttonIcon i.fa{
+    font-size: 100px;
+}
+
+a span {
+    text-decoration: underline;
+}
