@@ -18,6 +18,7 @@ h1.title {
 footer {
     text-align: center;
     font-size: 12px;
+    padding-bottom: 10px;
 }
 footer i.fa {
     font-size: 15px;
@@ -64,4 +65,15 @@ footer .love:hover i.fa {
 }
 .breadcrumbs {
     font-size: 18px;
+}
+i.errorface {
+    font-size:200px;
+}
+h1.error {
+    font-size:70px;
+}
+a.errorlink {
+    font-size:30px;
+    font-weight: bold;
+    text-transform: uppercase;
 }

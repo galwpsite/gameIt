@@ -28,6 +28,12 @@ def main():
 def test():
     #delete later
     return render_template('main.html',numOfGames=h.getNumOfGames(), numOfUsers=h.getNumOfUsers())
+
+@app.errorhandler(404)
+@flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 if __name__ == '__main__':
     app.debug=True
     app.run()
