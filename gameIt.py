@@ -23,11 +23,33 @@ def main():
     #delete later
     return render_template('main.html',numOfGames=h.getNumOfGames(), numOfUsers=h.getNumOfUsers())
 
-@app.route('/home/test')
-@flask_breadcrumbs.register_breadcrumb(app,'.test','Test')
-def test():
-    #delete later
-    return render_template('main.html',numOfGames=h.getNumOfGames(), numOfUsers=h.getNumOfUsers())
+
+@app.route('/home/games',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Games','Games')
+def games():
+    if request.method == 'POST':
+        form=request.form
+        return redirect(url_for("gamesSearch"),code=307)
+    posts = [dict(id=row[0],name=row[1],desc=row[2]) for row in h.getAllGames() ]
+    return render_template('archive-game.html',pageTitle="Manage Games",pageSubTitle="List Of All The Games: ",posts=posts)
+
+@app.route('/home/games/search',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Games.Search','Search Results')
+def gamesSearch():
+    form=request.form
+    posts = [dict(id=row[0],name=row[1],desc=row[2]) for row in h.findGameByName(form['name']) ]
+    return render_template('archive-game.html',pageTitle="Manage Games",pageSubTitle="List Of All The Games: ",posts=posts)
+
+@app.route('/home/games/edit')
+@flask_breadcrumbs.register_breadcrumb(app,'.Games.Edit','Edit Game')
+def gameEdit():
+    gameNo = request.args.get('gameNo')
+    game= [dict(id=row[0],name=row[1],desc=row[2]) for row in h.findGameByGameNo(gameNo)]
+    gameName = (game[0].get('name'))
+    gameDesc = (game[0].get('desc'))
+    return render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Edit Game: ",gameNo=gameNo,gameName=gameName,gameDesc=gameDesc)
+
+
 
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')

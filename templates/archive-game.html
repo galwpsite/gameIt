@@ -1,0 +1,33 @@
+{% extends "archive.html" %}
+{% block search %}
+ <div class="row">
+    <div class="columns six"><h5>{{ pageSubTitle }}</h5></div>
+    <div class="columns six">
+         <form action="" method="post">
+            <input type="text" name="name" value="{{request.form.name }}" placeholder="game name"/>
+            <input type="submit" value="Search" />
+        </form>
+    </div>
+ </div>
+{% endblock %}
+{% block loop %}
+        <table class="u-full-width">
+                <thread>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </thread>
+            <tbody>
+            {% for p in posts %}
+                <tr>
+                        <td>{{ p.id }}</td>
+                        <td><a href="#"> {{ p.name }} </a> </td>
+                        <td> {{ p.desc }}</td>
+                        <td class="actions"><a href="{{ url_for('gameEdit') }}?gameNo={{ p.id }}" title="edit"> <i class="fa fa-pencil"></i></a><a href="#" title="info"> <i class="fa fa-info-circle"></i></a> </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}  

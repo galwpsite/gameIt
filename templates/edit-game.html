@@ -1,0 +1,22 @@
+{% extends "archive.html" %}
+{% block search %}
+ <div class="row">
+    <div class="columns six"><h5>{{ pageSubTitle }}</h5></div>
+    <div class="columns six">
+         <form action="" method="post">
+            <input type="text" name="name" value="{{request.form.name }}" placeholder="game name"/>
+            <input type="submit" value="Search" />
+        </form>
+    </div>
+ </div>
+{% endblock %}
+{% block loop %}
+
+    <form action="" method="post" class="edit">
+        <p><label>Game No: </label>  <input type="text" class="id" name="id" value="{{ gameNo }}" readonly /></p>
+        <p> <label>Name: </label> <input type="text" class="name" name="name" value="{{ gameName }}" /></p>
+        <p> <label>Description: </label><textarea type="text" class="desc" name="desc"> {{ gameDesc }}</textarea></p>
+        <p><input type="submit"/> </p>
+    </form>
+
+{% endblock %}  

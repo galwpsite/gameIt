@@ -77,3 +77,20 @@ a.errorlink {
     font-weight: bold;
     text-transform: uppercase;
 }
+.actions a {
+    color:black;
+    margin:3px;
+}
+form.search {
+    display: inline-block;
+}
+form.edit label{
+    font-weight: bold;
+    margin:0;
+}
+form.edit p {
+    margin:3px 0;
+}
+form.edit input, form.edit textarea {
+    width: 100%;
+}
