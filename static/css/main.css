@@ -1,6 +1,10 @@
 body {
     background-color: #3F3152;
 }
+a {
+    color:cornflowerblue;
+    text-decoration: none;
+}
 .container {
     background-color: #fff;
     padding:1% 1%;
@@ -28,6 +32,7 @@ footer i.fa {
 
 #controlPanel .buttonIcon a{
     color:black;
+    transition-duration: 1s;
     text-decoration: none;
 }
 #controlPanel .buttonIcon a:hover{
@@ -45,4 +50,18 @@ a span {
 /*Colors: */
 .cl-pink {
     color:#F78F8B;
+}
+footer .love i.fa {
+    font-size: 15px;
+    transition-duration: 0.3s;
+}
+footer .love:hover i.fa {
+    font-size: 20px;
+    transition-duration: 0.3s;
+}
+.breadcrumbs span {
+    margin-right:5px;
+}
+.breadcrumbs {
+    font-size: 18px;
 }

@@ -1,4 +1,7 @@
 __author__ = 'galwp'
+'''
+    This is the "Model" Class, it takes things from our database
+'''
 import pyodbc
 class Helper():
     #Settings:

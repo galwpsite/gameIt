@@ -3,14 +3,28 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="static/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="static/css/skeleton.css">
-    <link rel="stylesheet" type="text/css" href="static/css/main.css">
-    <title>Welcome, friends!</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/normalize.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/skeleton.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}">
+    <title>Welcome to GameIT!</title>
+{#    TODO add a custom page title #}
 </head>
 
 <body>
 <div class="container">
+    <div class="breadcrumbs">
+    <span>You are in:</span>
+        {%- for breadcrumb in breadcrumbs -%}
+            {%  if not loop.last %}
+                 <a href="{{ breadcrumb.url }}">
+             {% endif %}
+                        {{ breadcrumb.text }}
+             {%  if not loop.last %}
+                </a>
+            {% endif %}
+            {{ '> ' if not loop.last }}
+        {%- endfor -%}
+    </div>
     {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
     {% endfor %}
@@ -19,7 +33,7 @@
     {% endif %}
     {% block content %}
     {% endblock %}
-<footer>made with <span class="cl-pink"> <i class="fa fa-heart"></i></span></footer>
+<footer>made with <span class="cl-pink love"> <i class="fa fa-heart"></i></span></footer>
 </div>
 </body>
 </html>
