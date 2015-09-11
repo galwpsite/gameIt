@@ -1,7 +1,7 @@
 {% extends "archive.html" %}
 {% block search %}
  <div class="row">
-    <div class="columns six"><h5>{{ pageSubTitle }}</h5></div>
+    <div class="columns six"><h5>{{ pageSubTitle }}</h5>     <strong><a href="#" class="cl-green"><i class="fa fa-plus"></i> Add New Game</a></strong> </div>
     <div class="columns six">
          <form action="" method="post">
             <input type="text" name="name" value="{{request.form.name }}" placeholder="game name"/>
@@ -22,9 +22,12 @@
             {% for p in posts %}
                 <tr>
                         <td>{{ p.id }}</td>
-                        <td><a href="#"> {{ p.name }} </a> </td>
+                        <td><a href="{{ url_for('gameEdit') }}?gameNo={{ p.id }}"> {{ p.name }} </a> </td>
                         <td> {{ p.desc }}</td>
-                        <td class="actions"><a href="{{ url_for('gameEdit') }}?gameNo={{ p.id }}" title="edit"> <i class="fa fa-pencil"></i></a><a href="#" title="info"> <i class="fa fa-info-circle"></i></a> </td>
+                        <td class="actions"><a href="{{ url_for('gameEdit') }}?gameNo={{ p.id }}" title="edit"> <i class="fa fa-pencil"></i></a>
+                            <a href="#" title="info"> <i class="fa fa-info-circle"></i></a>
+                            <a href="#" title="Remove"> <i class="fa fa-trash-o"></i></a>
+                        </td>
                 </tr>
             {% endfor %}
             </tbody>

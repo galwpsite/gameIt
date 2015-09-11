@@ -1,9 +1,15 @@
 body {
     background-color: #3F3152;
+    background-image: url(../img/footer_lodyas.png);
 }
 a {
-    color:cornflowerblue;
+    color:dimgray;
     text-decoration: none;
+    transition-duration: 0.2s;
+}
+a:hover {
+    color:#F78F8B;
+    transition-duration: 0.2s;
 }
 .container {
     background-color: #fff;
@@ -51,6 +57,12 @@ a span {
 /*Colors: */
 .cl-pink {
     color:#F78F8B;
+}
+.cl-green {
+    color:#468847;
+}
+a.cl-green:hover {
+    color:darkslategray;
 }
 footer .love i.fa {
     font-size: 15px;

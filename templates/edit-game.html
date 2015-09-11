@@ -5,18 +5,30 @@
     <div class="columns six">
          <form action="" method="post">
             <input type="text" name="name" value="{{request.form.name }}" placeholder="game name"/>
-            <input type="submit" value="Search" />
+            <input type="submit" value="Search" name="search-form" />
         </form>
     </div>
  </div>
 {% endblock %}
 {% block loop %}
-
-    <form action="" method="post" class="edit">
-        <p><label>Game No: </label>  <input type="text" class="id" name="id" value="{{ gameNo }}" readonly /></p>
-        <p> <label>Name: </label> <input type="text" class="name" name="name" value="{{ gameName }}" /></p>
-        <p> <label>Description: </label><textarea type="text" class="desc" name="desc"> {{ gameDesc }}</textarea></p>
-        <p><input type="submit"/> </p>
-    </form>
-
+<div class="row">
+    <div class="columns six">
+        <h5>Edit Info: </h5>
+        <form action="" method="post" class="edit">
+            <p><label>Game No: </label>  <input type="text" class="id" name="id" value="{{ gameNo }}" readonly /></p>
+            <p> <label>Name: </label> <input type="text" class="name" name="name" value="{{ gameName }}" data-validation="required" /></p>
+            <p> <label>Description: </label><textarea class="desc" name="desc" data-validation="required"> {{ gameDesc }}</textarea></p>
+            <p><input type="submit"/> </p>
+        </form>
+    </div>
+    <div class="columns six">
+        <h5>Quick Stats:</h5>
+        <p> stats goes here </p>
+        <a href="#">More Info</a>
+{#        todo add more info link#}
+    </div>
+</div>
+    <script>
+    $.validate();
+    </script>
 {% endblock %}  
