@@ -1,0 +1,8 @@
+
+        <h5>Info: </h5>
+        <form action="" method="post" class="edit">
+            <p><label>Game No: </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" class="id" name="id" value="{{ gameNo }}"   {% if gameNo !="" %} readonly  {% endif %} /></p>
+            <p> <label>Name: </label> <input type="text" class="name" name="name" value="{{ gameName }}" data-validation="required length"  data-validation-length="1-33" /></p>
+            <p> <label>Description: </label><textarea class="desc" name="desc" data-validation="required length"  data-validation-length="1-255">{{ gameDesc }}</textarea></p>
+            <p><input type="submit"/> </p>
+        </form>

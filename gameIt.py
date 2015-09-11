@@ -10,6 +10,8 @@ import flask_breadcrumbs
 from flask_menu import Menu, register_menu
 
 app = Flask(__name__)
+# set the secret key.  keep this really secret:
+app.secret_key = '3nMN*sBNjh#pjG*yGSKBZ5&ePG2eAmc^pcGG7KYXtSugvb2Ee$rW9$6gSNRpeAU$%BrfpGkhvHV6@heD2RTQ2pbk9cwHwAZVMyKz'
 
 Menu(app=app)
 flask_breadcrumbs.Breadcrumbs(app=app)
@@ -21,7 +23,7 @@ h=helper.Helper()
 @flask_breadcrumbs.register_breadcrumb(app,'.','Home')
 def main():
     #delete later
-    return render_template('main.html',numOfGames=h.getNumOfGames(), numOfUsers=h.getNumOfUsers())
+    return render_template('main.html',numOfGames=h.getNumOfGames(), numOfUsers=h.getNumOfUsers(),numOfLevels=h.getNumOfLevels(),numOfPurchases=h.getNumOfPurchases())
 
 
 @app.route('/home/games',methods=['GET','POST'])
@@ -53,7 +55,23 @@ def gameEdit():
     gameDesc = (game[0].get('desc'))
     return render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Edit Game: "+gameName,gameNo=gameNo,gameName=gameName,gameDesc=gameDesc)
 
-
+@app.route('/home/games/add',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Games.Add','Add Game')
+def gameAdd():
+    if request.method == 'POST':
+            form=request.form
+            if 'search-form' in form:
+                return redirect(url_for("gamesSearch"),code=307)
+            else: #If it was the edit form:
+                form=request.form
+                gameNo=(form['id'])
+                gameName = (form['name'])
+                gameDesc = (form['desc'])
+                if h.addGame(int(gameNo),gameName,gameDesc):
+                    flash("The game "+gameName+" successfully added.")
+                else :
+                    flash("Something went wrong (maybe GameNo already exist?)",'error')
+    return  render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Add New Game:",gameNo="",gameName="",gameDesc="")
 
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')

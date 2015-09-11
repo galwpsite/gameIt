@@ -27,12 +27,15 @@
             {{ '> ' if not loop.last }}
         {%- endfor -%}
     </div>
-    {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-    {% endfor %}
-    {% if error %}
-    <p class="error"><strong>Error:</strong> {{ error }}</p>
-    {% endif %}
+           {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
     {% block content %}
     {% endblock %}
 <footer>made with <span class="cl-pink love"> <i class="fa fa-heart"></i></span></footer>

@@ -10,21 +10,16 @@
     </div>
  </div>
 {% endblock %}
+
 {% block loop %}
 <div class="row">
     <div class="columns six">
-        <h5>Edit Info: </h5>
-        <form action="" method="post" class="edit">
-            <p><label>Game No: </label>  <input type="text" class="id" name="id" value="{{ gameNo }}" readonly /></p>
-            <p> <label>Name: </label> <input type="text" class="name" name="name" value="{{ gameName }}" data-validation="required" /></p>
-            <p> <label>Description: </label><textarea class="desc" name="desc" data-validation="required"> {{ gameDesc }}</textarea></p>
-            <p><input type="submit"/> </p>
-        </form>
+        {% include 'game-form.html' %}
     </div>
     <div class="columns six">
         <h5>Quick Stats:</h5>
         <p> stats goes here </p>
-        <a href="#">More Info</a>
+       <strong><a href="#">More Info</a></strong>
 {#        todo add more info link#}
     </div>
 </div>
