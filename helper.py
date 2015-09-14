@@ -26,12 +26,22 @@ class Helper():
     def findGameByGameNo(self,s):
         return self.__db_cursor.execute("""EXECUTE getGameByGameNo ? """,s).fetchall()
     def addGame(self,gameNo,gameName,gameDesc):
-        print(gameNo,gameName,gameDesc)
         try:
             self.__db_cursor.execute("""addGame  ?,?,? """,gameNo,gameName,gameDesc)
             return True
         except pyodbc.IntegrityError:
             return False
+    def updateGame (self,gameNo,gameName,gameDesc):
+        print(gameNo,gameName,gameDesc)
+        try:
+            self.__db_cursor.execute("""updateGame  ?,?,? """,gameNo,gameName,gameDesc)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+    def getGameCriteria (self,gameNo):
+        return self.__db_cursor.execute("""EXECUTE getGameCriteria ? """,gameNo).fetchall()
+    def getGameUnusedCriteria (self,gameNo):
+        return self.__db_cursor.execute("""EXECUTE getGameUnusedCriteria ? """,gameNo).fetchall()
 
 
 ### All Game Help Functions:

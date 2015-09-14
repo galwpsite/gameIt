@@ -4,5 +4,21 @@
             <p><label>Game No: </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" class="id" name="id" value="{{ gameNo }}"   {% if gameNo !="" %} readonly  {% endif %} /></p>
             <p> <label>Name: </label> <input type="text" class="name" name="name" value="{{ gameName }}" data-validation="required length"  data-validation-length="1-33" /></p>
             <p> <label>Description: </label><textarea class="desc" name="desc" data-validation="required length"  data-validation-length="1-255">{{ gameDesc }}</textarea></p>
-            <p><input type="submit"/> </p>
+
+            <p><input type="submit" value="Save Changes"/> </p>
         </form>
+
+        <h5>Current Criteria:</h5>
+        <p>
+            {% for c in gameCriteria %}
+                <span class="criteria">{{ c.cName }} <a href="/removeCriteria?gameNo={{ gameNo }}?cCode={{ c.cNo }}" title="Remove Criteria"><i class="fa fa-times"></i></a></span>
+            {%  if not loop.last %},{% endif %}
+            {% endfor %}
+        </p>
+        <h5>Available Criteria:</h5>
+        <p>
+            {% for c in gameUnusedCriteria %}
+                <span class="criteria">{{ c.cName }} <a href="/addCriteria?gameNo={{ gameNo }}?cCode={{ c.cNo }}" title="Add Criteria"><i class="fa fa-plus"></i></a></span>
+            {%  if not loop.last %},{% endif %}
+            {% endfor %}
+        </p>

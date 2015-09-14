@@ -2,9 +2,9 @@
 {% block search %}
  <div class="row">
     <div class="columns six"><h5>{{ pageSubTitle }}</h5></div>
-    <div class="columns six">
+    <div class="columns five offset-by-one">
          <form action="" method="post">
-            <input type="text" name="name" value="{{request.form.name }}" placeholder="game name"/>
+            <input type="text" name="name" value="{{request.form.name }}" placeholder="Game Name"/>
             <input type="submit" value="Search" name="search-form" />
         </form>
     </div>
