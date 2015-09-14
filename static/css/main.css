@@ -117,6 +117,17 @@ form.edit input, form.edit textarea {
 .flashes .error{
     color:red;
 }
-span.criteria {
+li.criteria {
     text-transform: capitalize;
+    list-style: none;
+    display: inline-block;
+    margin:0 5px;
+}
+a.add:after {
+    content: "\f067";
+        font: normal normal normal 14px/1 FontAwesome;
+}
+a.remove:after {
+    content: "\f00d";;
+        font: normal normal normal 14px/1 FontAwesome;
 }

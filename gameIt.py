@@ -66,7 +66,8 @@ def gameEdit():
     gameUnusedCriteria = [dict(cNo=row[0],cName=row[1])  for row in h.getGameUnusedCriteria(gameNo)]
     gameName = (game[0].get('name'))
     gameDesc = (game[0].get('desc'))
-    return render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Edit Game: "+gameName,gameNo=gameNo,gameName=gameName,gameDesc=gameDesc,gameCriteria=gameCriteria,gameUnusedCriteria=gameUnusedCriteria)
+    return render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Edit Game: "+gameName,gameNo=gameNo,gameName=gameName,gameDesc=gameDesc,
+                           gameCriteria=gameCriteria,gameUnusedCriteria=gameUnusedCriteria,showCriteria=True)
 
 @app.route('/home/games/add',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Games.Add','Add Game')
@@ -81,7 +82,8 @@ def gameAdd():
                 gameName = (form['name'])
                 gameDesc = (form['desc'])
                 if h.addGame(int(gameNo),gameName,gameDesc):
-                    flash("The game "+gameName+" successfully added.")
+                    flash("The game "+gameName+" successfully added")
+                    return  render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Add New Game:",gameNo=gameNo,gameName=gameName,gameDesc=gameDesc)
                 else :
                     flash("Something went wrong (maybe GameNo already exist?)",'error')
     return  render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Add New Game:",gameNo="",gameName="",gameDesc="")

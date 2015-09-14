@@ -1,4 +1,5 @@
 
+
         <h5>Info: </h5>
         <form action="" method="post" class="edit">
             <p><label>Game No: </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" class="id" name="id" value="{{ gameNo }}"   {% if gameNo !="" %} readonly  {% endif %} /></p>
@@ -7,18 +8,33 @@
 
             <p><input type="submit" value="Save Changes"/> </p>
         </form>
+{#/removeCriteria?gameNo={{ gameNo }}?cCode={{ c.cNo }}#}
+        {% if showCriteria == True %}
+            <h5>Current Criteria:</h5>
+            <ul class="criterias current">
+                {% for c in gameCriteria %}
+                    <li class="criteria code{{ c.cCode }}">{{ c.cName }} <a class="remove" href="#" title="Remove Criteria"></a></li>
+                {% endfor %}
+            </ul>
+            <h5>Available Criteria:</h5>
+            <ul class="criterias available">
+                {% for c in gameUnusedCriteria %}
+                    <li class="criteria  code{{ c.cNo }}">{{ c.cName }} <a class="add" href="#" title="Add Criteria"></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-        <h5>Current Criteria:</h5>
-        <p>
-            {% for c in gameCriteria %}
-                <span class="criteria">{{ c.cName }} <a href="/removeCriteria?gameNo={{ gameNo }}?cCode={{ c.cNo }}" title="Remove Criteria"><i class="fa fa-times"></i></a></span>
-            {%  if not loop.last %},{% endif %}
-            {% endfor %}
-        </p>
-        <h5>Available Criteria:</h5>
-        <p>
-            {% for c in gameUnusedCriteria %}
-                <span class="criteria">{{ c.cName }} <a href="/addCriteria?gameNo={{ gameNo }}?cCode={{ c.cNo }}" title="Add Criteria"><i class="fa fa-plus"></i></a></span>
-            {%  if not loop.last %},{% endif %}
-            {% endfor %}
-        </p>
+
+<script>
+$(document).on('click', 'a.add', function(e) {
+        $(this).removeClass("add");
+        $(this).addClass("remove")
+        $(".criterias.current ").append( $(this).parent('li'))
+});
+$(document).on('click', 'a.remove', function(e) {
+        $(this).removeClass("remove");
+        $(this).addClass("add")
+        $(".criterias.available ").append( $(this).parent('li'))
+});
+</script>
