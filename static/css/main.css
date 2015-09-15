@@ -125,9 +125,11 @@ li.criteria {
 }
 a.add:after {
     content: "\f067";
-        font: normal normal normal 14px/1 FontAwesome;
+    font: normal normal normal 14px/1 FontAwesome;
+    color:green;
 }
 a.remove:after {
     content: "\f00d";;
-        font: normal normal normal 14px/1 FontAwesome;
+    font: normal normal normal 14px/1 FontAwesome;
+    color:red;
 }

@@ -13,13 +13,13 @@
             <h5>Current Criteria:</h5>
             <ul class="criterias current">
                 {% for c in gameCriteria %}
-                    <li class="criteria code{{ c.cCode }}">{{ c.cName }} <a class="remove" href="#" title="Remove Criteria"></a></li>
+                    <li class="criteria code{{ c.cCode }}">{{ c.cName }} <a target="_blank" class="remove" title="Remove Criteria"></a></li>
                 {% endfor %}
             </ul>
             <h5>Available Criteria:</h5>
             <ul class="criterias available">
                 {% for c in gameUnusedCriteria %}
-                    <li class="criteria  code{{ c.cNo }}">{{ c.cName }} <a class="add" href="#" title="Add Criteria"></a>
+                    <li class="criteria  code{{ c.cNo }}">{{ c.cName }} <a onclick="popup('heeloworld')" target="_blank" class="add" title="Add Criteria"></a>
                     </li>
                 {% endfor %}
             </ul>
@@ -29,12 +29,18 @@
 <script>
 $(document).on('click', 'a.add', function(e) {
         $(this).removeClass("add");
-        $(this).addClass("remove")
-        $(".criterias.current ").append( $(this).parent('li'))
+        $(this).addClass("remove");
+        $(this).prop('title', 'Remove Criteria');
+        $(".criterias.current ").append( $(this).parent('li'));
 });
 $(document).on('click', 'a.remove', function(e) {
         $(this).removeClass("remove");
-        $(this).addClass("add")
-        $(".criterias.available ").append( $(this).parent('li'))
+        $(this).addClass("add");
+        $(this).prop('title', 'Add Criteria');
+        $(".criterias.available ").append( $(this).parent('li'));
 });
+
+    function popup(msg) {
+        // alert(msg);
+    }
 </script>
