@@ -6,8 +6,8 @@ import pyodbc
 class Helper():
     #Settings:
     connection_str ="""
-    Driver={SQL Server Native Client 11.0};
-    Server=GAL-PC\SQLEXPRESS;
+    Driver={SQL Server Native Client 10.0};
+    Server=DESKTOP-SL551FH\SQLEXPRESS;
     Database=gameIt_DBSummer;
     Trusted_Connection=yes;
     """
