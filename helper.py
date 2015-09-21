@@ -16,32 +16,43 @@ class Helper():
     __db_cursor = __db_connection.cursor()
 
 
+
 ### All Game Help Functions:
     def getAllGames(self):
         return self.__db_cursor.execute("EXECUTE getAllGames;").fetchall()
+
     def findGameByName(self,s):
         return self.__db_cursor.execute("""EXECUTE getGameByName ? """,s).fetchall()
+
     def getNumOfGames(self):
           return len(list(self.getAllGames()))
+
     def findGameByGameNo(self,s):
         return self.__db_cursor.execute("""EXECUTE getGameByGameNo ? """,s).fetchall()
+
     def addGame(self,gameNo,gameName,gameDesc):
         try:
-            self.__db_cursor.execute("""addGame  ?,?,? """,gameNo,gameName,gameDesc)
+            self.__db_cursor.execute("""EXECUTE addGame  ?,?,? """,gameNo,gameName,gameDesc)
             return True
         except pyodbc.IntegrityError:
             return False
+
     def updateGame (self,gameNo,gameName,gameDesc):
-        print(gameNo,gameName,gameDesc)
         try:
-            self.__db_cursor.execute("""updateGame  ?,?,? """,gameNo,gameName,gameDesc)
+            self.__db_cursor.execute("""EXECUTE updateGame  ?,?,? """,gameNo,gameName,gameDesc)
             return True
         except pyodbc.IntegrityError:
             return False
+
     def getGameCriteria (self,gameNo):
         return self.__db_cursor.execute("""EXECUTE getGameCriteria ? """,gameNo).fetchall()
+
     def getGameUnusedCriteria (self,gameNo):
         return self.__db_cursor.execute("""EXECUTE getGameUnusedCriteria ? """,gameNo).fetchall()
+
+    def addCriteriaToGame (self,cCode,gameNo):
+            print (cCode,gameNo)
+            self.__db_cursor.execute("""EXECUTE addCriteriaToGame  ?,? """,cCode,gameNo)
 
 
 ### All Game Help Functions:

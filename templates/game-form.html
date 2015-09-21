@@ -8,18 +8,19 @@
 
             <p><input type="submit" value="Save Changes"/> </p>
         </form>
-{#/removeCriteria?gameNo={{ gameNo }}?cCode={{ c.cNo }}#}
+{#/removeCriteriaFromGame?gameNo={{ gameNo }}?cCode={{ c.cNo }}#}
+
         {% if showCriteria == True %}
             <h5>Current Criteria:</h5>
             <ul class="criterias current">
                 {% for c in gameCriteria %}
-                    <li class="criteria code{{ c.cCode }}">{{ c.cName }} <a target="_blank" class="remove" title="Remove Criteria"></a></li>
+                    <li class="criteria code{{ c.cCode }}">{{ c.cName }} <a target="_blank" class="remove criteria" title="Remove Criteria"></a></li>
                 {% endfor %}
             </ul>
             <h5>Available Criteria:</h5>
             <ul class="criterias available">
                 {% for c in gameUnusedCriteria %}
-                    <li class="criteria  code{{ c.cNo }}">{{ c.cName }} <a onclick="popup('heeloworld')" target="_blank" class="add" title="Add Criteria"></a>
+                    <li class="criteria  code{{ c.cNo }}">{{ c.cName }} <a onclick="popup({{ c.cNo }},{{ gameNo }})" target="_blank" class="add criteria"  title="Add Criteria"></a>
                     </li>
                 {% endfor %}
             </ul>
@@ -32,6 +33,8 @@ $(document).on('click', 'a.add', function(e) {
         $(this).addClass("remove");
         $(this).prop('title', 'Remove Criteria');
         $(".criterias.current ").append( $(this).parent('li'));
+
+
 });
 $(document).on('click', 'a.remove', function(e) {
         $(this).removeClass("remove");
@@ -40,7 +43,7 @@ $(document).on('click', 'a.remove', function(e) {
         $(".criterias.available ").append( $(this).parent('li'));
 });
 
-    function popup(msg) {
-        // alert(msg);
+    function popup(cCode,gameNo) {
+                window.open("/addCriteriaToGame?cCode="+cCode+"&gameNo="+gameNo, "", "width=1, height=1");
     }
 </script>

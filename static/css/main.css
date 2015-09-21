@@ -133,3 +133,6 @@ a.remove:after {
     font: normal normal normal 14px/1 FontAwesome;
     color:red;
 }
+a.criteria:hover {
+    cursor: pointer;
+}

@@ -88,6 +88,16 @@ def gameAdd():
                     flash("Something went wrong (maybe GameNo already exist?)",'error')
     return  render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Add New Game:",gameNo="",gameName="",gameDesc="")
 
+@app.route('/addCriteriaToGame',methods=['GET','POST'])
+def addCriteriaToGame():
+    gameNo = request.args.get('gameNo')
+    cCode = request.args.get('cCode')
+    if h.addCriteriaToGame(cCode,gameNo):
+        return "succsess"
+    else:
+        return 'failour'
+
+
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')
 def page_not_found(e):
