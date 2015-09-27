@@ -51,8 +51,13 @@ class Helper():
         return self.__db_cursor.execute("""EXECUTE getGameUnusedCriteria ? """,gameNo).fetchall()
 
     def addCriteriaToGame (self,cCode,gameNo):
-            print (cCode,gameNo)
             self.__db_cursor.execute("""EXECUTE addCriteriaToGame  ?,? """,cCode,gameNo)
+
+    def removeCriteriaFromGame (self,cCode):
+            self.__db_cursor.execute("""EXECUTE removeCriteriaFromGame  ? """,cCode)
+
+    def getFreeGameCriteria(self):
+        return self.__db_cursor.execute("""EXECUTE getFreeGameCriteria """).fetchall()
 
 
 ### All Game Help Functions:
@@ -68,3 +73,7 @@ class Helper():
         return self.__db_cursor.execute("EXECUTE getAllUsers;").fetchall()
     def getNumOfUsers(self):
       return len(list(self.getAllUsers()))
+
+
+    def getAllCriterias(self):
+        return self.__db_cursor.execute("""EXECUTE getAllCriterias """).fetchall()

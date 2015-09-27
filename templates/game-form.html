@@ -8,19 +8,19 @@
 
             <p><input type="submit" value="Save Changes"/> </p>
         </form>
-{#/removeCriteriaFromGame?gameNo={{ gameNo }}?cCode={{ c.cNo }}#}
+
 
         {% if showCriteria == True %}
             <h5>Current Criteria:</h5>
             <ul class="criterias current">
                 {% for c in gameCriteria %}
-                    <li class="criteria code{{ c.cCode }}">{{ c.cName }} <a target="_blank" class="remove criteria" title="Remove Criteria"></a></li>
+                    <li class="criteria code{{ c.cCode }}">{{ c.cName }}  <a onclick="removeCriteria({{ c.cNo }})" target="_blank" class="remove criteria" title="Remove Criteria"></a></li>
                 {% endfor %}
             </ul>
             <h5>Available Criteria:</h5>
             <ul class="criterias available">
                 {% for c in gameUnusedCriteria %}
-                    <li class="criteria  code{{ c.cNo }}">{{ c.cName }} <a onclick="popup({{ c.cNo }},{{ gameNo }})" target="_blank" class="add criteria"  title="Add Criteria"></a>
+                    <li class="criteria  code{{ c.cNo }}">{{ c.cName }} <a onclick="addCriteria({{ c.cNo }},{{ gameNo }})" target="_blank" class="add criteria"  title="Add Criteria"></a>
                     </li>
                 {% endfor %}
             </ul>
@@ -43,7 +43,11 @@ $(document).on('click', 'a.remove', function(e) {
         $(".criterias.available ").append( $(this).parent('li'));
 });
 
-    function popup(cCode,gameNo) {
+    function addCriteria(cCode,gameNo) {
                 window.open("/addCriteriaToGame?cCode="+cCode+"&gameNo="+gameNo, "", "width=1, height=1");
+    }
+    function removeCriteria(cCode) {
+
+         window.open("/removeCriteriaFromGame?cCode="+cCode, "", "width=1, height=1");
     }
 </script>

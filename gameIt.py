@@ -63,7 +63,7 @@ def gameEdit():
     gameNo = request.args.get('gameNo')
     game= [dict(id=row[0],name=row[1],desc=row[2]) for row in h.findGameByGameNo(gameNo)]
     gameCriteria=[dict(cNo=row[0],cName=row[1])  for row in h.getGameCriteria(gameNo)]
-    gameUnusedCriteria = [dict(cNo=row[0],cName=row[1])  for row in h.getGameUnusedCriteria(gameNo)]
+    gameUnusedCriteria = [dict(cNo=row[0],cName=row[1])  for row in h.getFreeGameCriteria()]
     gameName = (game[0].get('name'))
     gameDesc = (game[0].get('desc'))
     return render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Edit Game: "+gameName,gameNo=gameNo,gameName=gameName,gameDesc=gameDesc,
@@ -92,11 +92,23 @@ def gameAdd():
 def addCriteriaToGame():
     gameNo = request.args.get('gameNo')
     cCode = request.args.get('cCode')
-    if h.addCriteriaToGame(cCode,gameNo):
-        return "succsess"
-    else:
-        return 'failour'
+    h.addCriteriaToGame(cCode,gameNo)
+    return "<script>window.close();</script>"
 
+@app.route('/removeCriteriaFromGame',methods=['GET','POST'])
+def removeCriteriaFromGame():
+    cCode = request.args.get('cCode')
+    h.removeCriteriaFromGame(cCode)
+    return "<script>window.close();</script>"
+
+@app.route('/home/criteria',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Criterias','Criterias List')
+def criterias():
+    if request.method == 'POST':
+        form=request.form
+        return redirect(url_for("gamesSearch"),code=307)
+    allCriterias = [dict(id=row[0],name=row[1],amount=row[2]) for row in h.getAllCriterias() ]
+    return render_template('archive-criterias.html',pageTitle="Manage Criterias",pageSubTitle="List Of All The Criterias: ",allCriterias=allCriterias)
 
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')
