@@ -77,3 +77,4 @@ class Helper():
 
     def getAllCriterias(self):
         return self.__db_cursor.execute("""EXECUTE getAllCriterias """).fetchall()
+    shalom olam
