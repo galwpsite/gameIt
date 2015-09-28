@@ -1,0 +1,44 @@
+
+
+        <h5>Info: </h5>
+        <form action="" method="post" class="edit">
+            <p><label>Criteria No: </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" class="id" name="id" value="{{ cCode }}"   {% if gameNo !="" %} readonly  {% endif %} /></p>
+            <p> <label>Name: </label> <input type="text" class="name" name="name" value="{{ name }}" data-validation="required length"  data-validation-length="1-33" /></p>
+            <p> <label>Amount: </label> <input type="text" class="amount" name="amount" value="{{ amount }}" data-validation="required length"  data-validation-length="1-33" /></p>
+
+            <p><input type="submit" value="Save Changes"/> </p>
+        </form>
+
+        {%  if gameName !=None %}
+            <p><h5>Attached to game: </h5>
+                <a href="{{ url_for('gameEdit') }}?gameNo={{ gameNo }}" Title="Edit {{ gameName }} ">{{ gameName }}</a>
+            </p>
+        {% endif %}
+
+
+
+
+<script>
+$(document).on('click', 'a.add', function(e) {
+        $(this).removeClass("add");
+        $(this).addClass("remove");
+        $(this).prop('title', 'Remove Criteria');
+        $(".criterias.current ").append( $(this).parent('li'));
+
+
+});
+$(document).on('click', 'a.remove', function(e) {
+        $(this).removeClass("remove");
+        $(this).addClass("add");
+        $(this).prop('title', 'Add Criteria');
+        $(".criterias.available ").append( $(this).parent('li'));
+});
+
+    function addCriteria(cCode,gameNo) {
+                window.open("/addCriteriaToGame?cCode="+cCode+"&gameNo="+gameNo, "", "width=1, height=1");
+    }
+    function removeCriteria(cCode) {
+
+         window.open("/removeCriteriaFromGame?cCode="+cCode, "", "width=1, height=1");
+    }
+</script>

@@ -107,8 +107,33 @@ def criterias():
     if request.method == 'POST':
         form=request.form
         return redirect(url_for("gamesSearch"),code=307)
-    allCriterias = [dict(id=row[0],name=row[1],amount=row[2]) for row in h.getAllCriterias() ]
+    allCriterias = [dict(id=row[0],name=row[1],amount=row[2],gameName=row[3],gameNo=row[4]) for row in h.getAllCriterias() ]
     return render_template('archive-criterias.html',pageTitle="Manage Criterias",pageSubTitle="List Of All The Criterias: ",allCriterias=allCriterias)
+
+@app.route('/home/criteria/edit',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Criterias.Edit','Edit Criteria')
+def criteriaEdit():
+    if request.method == 'POST':
+            form=request.form
+            if 'search-form' in form:
+                return redirect(url_for("gamesSearch"),code=307)
+            else: #If it was the edit form:
+                form=request.form
+                gameNo=(form['id'])
+                gameName = (form['name'])
+                gameDesc = (form['desc'])
+                if h.updateGame(int(gameNo),gameName,gameDesc):
+                    flash("The game "+gameName+" successfully updated.")
+                else :
+                    flash("Something went wrong",'error')
+    cCode = request.args.get('cCode')
+    game= [dict(id=row[0],name=row[1],desc=row[2],gameName=row[3],gameNo=row[4]) for row in h.getCriteriaByCode(cCode)]
+    name = (game[0].get('name'))
+    amount = (game[0].get('desc'))
+    gameName=(game[0].get('gameName'))
+    gameNo=(game[0].get('gameNo'))
+    return render_template('edit-criteria.html',pageTitle="Manage Criteria",pageSubTitle="Edit Criteria: "+name,cCode=cCode,name=name,amount=amount,
+                           gameName=gameName,gameNo=gameNo,showCriteria=True)
 
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')

@@ -37,6 +37,9 @@ class Helper():
         except pyodbc.IntegrityError:
             return False
 
+    def getCriteriaByCode(self,s):
+        return self.__db_cursor.execute("""EXECUTE getCriteriaByCode ? """,s).fetchall()
+
     def updateGame (self,gameNo,gameName,gameDesc):
         try:
             self.__db_cursor.execute("""EXECUTE updateGame  ?,?,? """,gameNo,gameName,gameDesc)
@@ -77,4 +80,3 @@ class Helper():
 
     def getAllCriterias(self):
         return self.__db_cursor.execute("""EXECUTE getAllCriterias """).fetchall()
-    

@@ -14,13 +14,13 @@
             <h5>Current Criteria:</h5>
             <ul class="criterias current">
                 {% for c in gameCriteria %}
-                    <li class="criteria code{{ c.cCode }}">{{ c.cName }}  <a onclick="removeCriteria({{ c.cNo }})" target="_blank" class="remove criteria" title="Remove Criteria"></a></li>
+                    <li class="criteria code{{ c.cCode }}"><a title="Edit Criteria" href="{{ url_for('criteriaEdit') }}?cCode={{ c.cNo }}"> {{ c.cName }}   </a> <a  onclick="removeCriteria({{ c.cNo }})" target="_blank" class="remove criteria" title="Remove Criteria"></a></li>
                 {% endfor %}
             </ul>
             <h5>Available Criteria:</h5>
             <ul class="criterias available">
                 {% for c in gameUnusedCriteria %}
-                    <li class="criteria  code{{ c.cNo }}">{{ c.cName }} <a onclick="addCriteria({{ c.cNo }},{{ gameNo }})" target="_blank" class="add criteria"  title="Add Criteria"></a>
+                    <li class="criteria  code{{ c.cNo }}"><a title="Edit Criteria" href="{{ url_for('criteriaEdit') }}?cCode={{ c.cNo }}"> {{ c.cName }} </a> <a onclick="addCriteria({{ c.cNo }},{{ gameNo }})" target="_blank" class="add criteria"  title="Add Criteria"></a>
                     </li>
                 {% endfor %}
             </ul>

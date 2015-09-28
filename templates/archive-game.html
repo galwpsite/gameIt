@@ -28,7 +28,7 @@
                         <td>
                             {% for c in p.c %}
 
-                                    <span class="criteria">{{ c.cName }}</span>
+                                    <span class="criteria"><a href="{{ url_for('criteriaEdit') }}?cCode={{ c.cNo }}" >{{ c.cName }}</a></span>
                                 {%  if not loop.last %},{% endif %}
                             {% endfor %}
                         </td>
