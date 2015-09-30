@@ -101,6 +101,13 @@ def removeCriteriaFromGame():
     h.removeCriteriaFromGame(cCode)
     return "<script>window.close();</script>"
 
+@app.route('/makeGameCriteria',methods=['GET','POST'])
+def makeGameCriteria():
+    cCode = request.args.get('cCode')
+    h.makeGameCriteria(cCode)
+    return "<script>window.close();</script>"
+
+
 @app.route('/home/criteria',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Criterias','Criterias List')
 def criterias():
@@ -108,7 +115,34 @@ def criterias():
         form=request.form
         return redirect(url_for("gamesSearch"),code=307)
     allCriterias = [dict(id=row[0],name=row[1],amount=row[2],gameName=row[3],gameNo=row[4]) for row in h.getAllCriterias() ]
+    for c in allCriterias:
+        try:
+            h.findGameCritByCode(c.get('id'))[0]
+            c['type']='gameCriteria'
+        except IndexError:
+            c['type']='normalCriteria'
+
     return render_template('archive-criterias.html',pageTitle="Manage Criterias",pageSubTitle="List Of All The Criterias: ",allCriterias=allCriterias)
+
+
+@app.route('/home/criteria/add',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Criterias.Add','Add Criteria')
+def criteriaAdd():
+    if request.method == 'POST':
+            form=request.form
+            if 'search-form' in form:
+                return redirect(url_for("gamesSearch"),code=307)
+            else: #If it was the edit form:
+                form=request.form
+                critNo=(form['id'])
+                critName = (form['critName'])
+                critAmount = (form['critAmount'])
+                if h.addCrit(critNo,critName,critAmount):
+                    flash("The Criteria "+critName+" successfully added")
+                    return  render_template('edit-criteria.html',pageTitle="Manage Games",pageSubTitle="Add New Game:",critNo=critNo,critName=critName,critAmount=critAmount)
+                else :
+                    flash("Something went wrong (maybe GameNo already exist?)",'error')
+    return  render_template('edit-criteria.html',pageTitle="Manage Criteria",pageSubTitle="Add New Criteria:",critNo="",critName="",critAmount="")
 
 @app.route('/home/criteria/edit',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Criterias.Edit','Edit Criteria')
@@ -119,21 +153,37 @@ def criteriaEdit():
                 return redirect(url_for("gamesSearch"),code=307)
             else: #If it was the edit form:
                 form=request.form
-                gameNo=(form['id'])
-                gameName = (form['name'])
-                gameDesc = (form['desc'])
-                if h.updateGame(int(gameNo),gameName,gameDesc):
-                    flash("The game "+gameName+" successfully updated.")
+                critNo=(form['id'])
+                critName = (form['critName'])
+                critAmount = (form['critAmount'])
+                if h.updateGame(int(critNo),critName,critAmount):
+                    flash("The game "+critName+" successfully updated.")
                 else :
                     flash("Something went wrong",'error')
+    critNo = request.args.get('cCode')
+    crit= [dict(id=row[0],name=row[1],amount=row[2]) for row in h.findCritByCode(critNo)]
+    critName = (crit[0].get('name'))
+    critAmount = (crit[0].get('amount'))
+    game=None
+    isGameCrit = True
+    attached=False
+    if not h.findGameCritByCode(critNo):
+       isGameCrit=False;
+    if isGameCrit:
+        attached=True
+        #Get the attached game
+        game=[dict(id=row[0],name=row[1]) for row in h.getGameCritGame(critNo)]
+        if not game:
+            attached=False
+    return render_template('edit-criteria.html',pageTitle="Manage Criteria",pageSubTitle="Edit Criteria: "+critName,critNo=critNo,critName=critName,critAmount=critAmount,
+                           isGameCrit=isGameCrit,game=game,attached=attached)
+
+@app.route('/removeGameCriteria',methods=['GET','POST'])
+def removeGameCriteria():
     cCode = request.args.get('cCode')
-    game= [dict(id=row[0],name=row[1],desc=row[2],gameName=row[3],gameNo=row[4]) for row in h.getCriteriaByCode(cCode)]
-    name = (game[0].get('name'))
-    amount = (game[0].get('desc'))
-    gameName=(game[0].get('gameName'))
-    gameNo=(game[0].get('gameNo'))
-    return render_template('edit-criteria.html',pageTitle="Manage Criteria",pageSubTitle="Edit Criteria: "+name,cCode=cCode,name=name,amount=amount,
-                           gameName=gameName,gameNo=gameNo,showCriteria=True)
+    print (cCode)
+    h.removeGameCriteria(cCode)
+    return "<script>window.close();</script>"
 
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')

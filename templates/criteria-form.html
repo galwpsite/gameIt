@@ -2,43 +2,35 @@
 
         <h5>Info: </h5>
         <form action="" method="post" class="edit">
-            <p><label>Criteria No: </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" class="id" name="id" value="{{ cCode }}"   {% if gameNo !="" %} readonly  {% endif %} /></p>
-            <p> <label>Name: </label> <input type="text" class="name" name="name" value="{{ name }}" data-validation="required length"  data-validation-length="1-33" /></p>
-            <p> <label>Amount: </label> <input type="text" class="amount" name="amount" value="{{ amount }}" data-validation="required length"  data-validation-length="1-33" /></p>
+            <p><label>Criteria No: </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" class="id" name="id" value="{{ critNo }}"   {% if critNo !="" %} readonly  {% endif %} /></p>
+            <p> <label>Name: </label> <input type="text" class="name" name="critName" value="{{ critName }}" data-validation="required length"  data-validation-length="1-33" /></p>
+            <p> <label>Amount: </label> <input type="text" class="amount" name="critAmount" value="{{ critAmount }}" data-validation="required length"  data-validation-length="1-33" /></p>
 
             <p><input type="submit" value="Save Changes"/> </p>
         </form>
 
-        {%  if gameName !=None %}
-            <p><h5>Attached to game: </h5>
-                <a href="{{ url_for('gameEdit') }}?gameNo={{ gameNo }}" Title="Edit {{ gameName }} ">{{ gameName }}</a>
-            </p>
+        {%  if isGameCrit == False %}
+            <h5>This is currently not a game criteria</h5>
+            <a class="button" onclick="makeGameCriteria()">Make Game Criteria</a>
+                <script>
+                    function makeGameCriteria() {
+                                window.open("{{ url_for('makeGameCriteria') }}?cCode={{ critNo }}", "", "width=1, height=1");
+                                window.open("{{ url_for('criteriaEdit') }}?cCode={{ critNo }}","_self")
+                        }
+                    </script>
+            {% else %}
+                {% if attached==True %}
+                    <h5>Attached to:     <a href="{{ url_for('gameEdit')}}?gameNo={{ game[0].id }}">{{ game[0].name }}</a></h5>
+                    <a class="button" onclick="removeAttachment()">Remove Attachment</a>
+                    <script>
+                            function removeAttachment() {
+                                window.open("{{ url_for('removeCriteriaFromGame') }}?cCode={{ critNo }}&?gameNo={{ game[0].id }}", "", "width=1, height=1");
+                                window.open("{{ url_for('criteriaEdit') }}?cCode={{ critNo }}","_self")
+                        }
+                    </script>
+                    {% else %}
+                        <h5 class="cl-red">This is a Game Criteria, but it is not attached to any game</h5>
+                        <a href="{{ url_for('games') }}" class="button">Manage Games</a>
+
+                {% endif %}
         {% endif %}
-
-
-
-
-<script>
-$(document).on('click', 'a.add', function(e) {
-        $(this).removeClass("add");
-        $(this).addClass("remove");
-        $(this).prop('title', 'Remove Criteria');
-        $(".criterias.current ").append( $(this).parent('li'));
-
-
-});
-$(document).on('click', 'a.remove', function(e) {
-        $(this).removeClass("remove");
-        $(this).addClass("add");
-        $(this).prop('title', 'Add Criteria');
-        $(".criterias.available ").append( $(this).parent('li'));
-});
-
-    function addCriteria(cCode,gameNo) {
-                window.open("/addCriteriaToGame?cCode="+cCode+"&gameNo="+gameNo, "", "width=1, height=1");
-    }
-    function removeCriteria(cCode) {
-
-         window.open("/removeCriteriaFromGame?cCode="+cCode, "", "width=1, height=1");
-    }
-</script>

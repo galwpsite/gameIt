@@ -63,6 +63,38 @@ class Helper():
         return self.__db_cursor.execute("""EXECUTE getFreeGameCriteria """).fetchall()
 
 
+
+    def addCrit(self,critNo,critName,critAmount):
+        try:
+            self.__db_cursor.execute("""EXECUTE addCrit  ?,?,? """,critNo,critName,critAmount)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+    def findCritByCode(self,s):
+        return self.__db_cursor.execute("""EXECUTE findCrit ? """,s).fetchall()
+
+    def findGameCritByCode(self,s):
+        return self.__db_cursor.execute("""EXECUTE findGameCritByCode ? """,s).fetchall()
+
+    def getGameCritGame(self,s):
+        return self.__db_cursor.execute("""EXECUTE getGameCritGame ? """,s).fetchall()
+
+    def removeGameCriteria(self,critNo):
+        try:
+            self.__db_cursor.execute("""EXECUTE removeGameCriteria  ?""",critNo)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+    def makeGameCriteria(self,critNo):
+        try:
+            self.__db_cursor.execute("""EXECUTE makeGameCriteria  ?""",critNo)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+
 ### All Game Help Functions:
     def getNumOfLevels(self):
         return len(list(self.__db_cursor.execute("""EXECUTE getNumOfLevels""").fetchall()))

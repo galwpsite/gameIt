@@ -64,6 +64,9 @@ a span {
 .cl-green {
     color:#468847;
 }
+.cl-red{
+    color:red;
+}
 a.cl-green:hover {
     color:darkslategray;
 }
@@ -135,4 +138,7 @@ a.remove:after {
 }
 a.criteria:hover {
     cursor: pointer;
+}
+tr.gameCriteria {
+    background-color: #FDE3FF;
 }
