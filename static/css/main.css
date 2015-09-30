@@ -139,6 +139,3 @@ a.remove:after {
 a.criteria:hover {
     cursor: pointer;
 }
-tr.gameCriteria {
-    background-color: #FDE3FF;
-}

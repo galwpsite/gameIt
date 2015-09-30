@@ -14,6 +14,7 @@
         <table class="u-full-width">
                 <thread>
                     <th>Code</th>
+                    <th>Type</th>
                     <th>Name</th>
                     <th>Attached To Game</th>
                     <th>Amount</th>
@@ -23,6 +24,13 @@
             {% for c in allCriterias %}
                 <tr class="{{ c.type }}">
                         <td>{{c.id }}</td>
+                        <td>
+                            {% if c.type=='gameCriteria' %}
+                                <i class="fa fa-gamepad" title="Game Criteria"></i>
+                                {% else %}
+                                     <i title="Normal Criteria" class="fa fa-trophy"></i>
+                            {% endif %}
+                        </td>
                         <td><a href="{{ url_for('criteriaEdit') }}?cCode={{ c.id }}" Title="Edit {{ c.name }} "> {{ c.name }} </a> </td>
                         {%  if c.gameName != None  %}
                             <td><a href="{{ url_for('gameEdit') }}?gameNo={{ c.gameNo }}" Title="Edit {{ c.gameName }} ">{{ c.gameName }}</a></td>
