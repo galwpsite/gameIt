@@ -1,0 +1,25 @@
+{% extends 'report-show.html' %}
+{% block content %}
+    <table class="u-full-width">
+        <thread>
+            <th>User No'</th>
+            <th>Nick Name</th>
+            <th>Game No'</th>
+            <th>No' Of Requests</th>
+            <th>No' Of Senders</th>
+        </thread>
+        <tbody>
+            {% for r in rows %}
+                <tr>
+                    <td>{{ r.r1 }}</td>
+                    <td>{{ r.r2 }}</td>
+                    <td>{{ r.r3 }}</td>
+                    <td>{{ r.r4 }}</td>
+                    <td>{{ r.r5 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+{% endblock %}

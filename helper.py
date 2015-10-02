@@ -119,3 +119,6 @@ class Helper():
     def reportPurchasePerYear(self):
         return self.__db_cursor.execute("""EXECUTE reportPurchasePerYear """).fetchall()
 
+    def reportUsersWithXFriends(self,x):
+        return self.__db_cursor.execute("""EXECUTE reportUsersWithXFriends ?""",x).fetchall()
+

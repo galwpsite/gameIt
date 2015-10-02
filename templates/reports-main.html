@@ -5,6 +5,14 @@
     <ul class="reports">
         <li title="ex2 q1" ><strong onclick="openReport('q1')">Level Information</strong>: <span >will show game information, level inofrmation, how many players got into the level and how many ranked it, and the avg ranking.</span></li>
         <li title="ex2 q2" ><strong onclick="openReport('q2')">Purchases Per Year</strong> <span>return for every year and every game the information about the game, new users in each year, overall summery of income </span></li>
+        <li title="ex2 q3" ><strong>Friends with X game requests</strong>
+            <span>return return a list of friends who have X friend requests which were sent by 0.3 * X diffrent friends</span>
+            <form class="hide q3" action="" >
+                <input class="xval" type="text" name="x" placeholder="value of x" data-validation-regexp="^[0-9]*$" data-validation="custom required"/>
+                <input type="submit" value="Open Report" onclick="openReport('q3')" />
+            </form>
+        </li>
+
     </ul>
     <script>
         function openReport(q) {
@@ -15,9 +23,21 @@
                 case "q2":
                      window.open("{{ url_for('showReport') }}?q=2",'','width=1200,height=800');
                     break;
+                case "q3":
+                    if (jQuery('form.q3 .xval').hasClass('valid')) {
+                        window.open("{{ url_for('showReport') }}?q=3&x=" + jQuery('form.q3 input.xval').val(), '', 'width=1200,height=800');
+                    }
+                    break;
 
             }
-
     }
+     $(document).ready(function () {
+        $('.hide').hide();
+        $('li').click(function(){
+            $('.hide',$(this)).show();
+        });
+     });
+    $.validate();
     </script>
+
 {% endblock %}

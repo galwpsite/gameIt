@@ -44,6 +44,11 @@ def showReport():
             rows = [dict(r1=row[0],r2=row[1],r3=row[1],r4=row[3],r5=row[4],r6=row[5],r7=row[6]
                       ,r8=row[7]) for row in h.reportPurchasePerYear() ]
             return render_template('report-q2.html',title="Level Information",rows=rows)
+
+    elif (q=='3'):
+            xval=request.args.get('x')
+            rows = [dict(r1=row[0],r2=row[1],r3=row[1],r4=row[3],r5=row[4],r6=row[5]) for row in h.reportUsersWithXFriends(xval) ]
+            return render_template('report-q3.html',title="Friends with "+xval+" Game Requests which where sent by "+str(0.3*float(xval))+" diffrent friends",rows=rows)
     return render_template('reports-main.html')
 
 @app.route('/home/games',methods=['GET','POST'])
