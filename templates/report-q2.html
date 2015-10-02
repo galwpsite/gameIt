@@ -1,0 +1,29 @@
+{% extends 'report-show.html' %}
+{% block content %}
+    <table class="u-full-width">
+        <thread>
+            <th>Year</th>
+            <th>Game Name</th>
+            <th>New Users Per Year</th>
+            <th>Total Money</th>
+            <th>Total Coins For Moves</th>
+            <th>Total Coins For Lives</th>
+            <th>Total Coins For Boosters <th>
+        </thread>
+        <tbody>
+            {% for r in rows %}
+                <tr>
+                    <td>{{ r.r1 }}</td>
+                    <td>{{ r.r2 }}</td>
+                    <td>{{ r.r3 }}</td>
+                    <td>{{ r.r4 }}</td>
+                    <td>{{ r.r5 }}</td>
+                    <td>{{ r.r6 }}</td>
+                    <td>{{ r.r7 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+{% endblock %}

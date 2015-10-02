@@ -112,3 +112,10 @@ class Helper():
 
     def getAllCriterias(self):
         return self.__db_cursor.execute("""EXECUTE getAllCriterias """).fetchall()
+
+    def reportLevelInfo(self):
+        return self.__db_cursor.execute("""EXECUTE reportLevelInfo """).fetchall()
+
+    def reportPurchasePerYear(self):
+        return self.__db_cursor.execute("""EXECUTE reportPurchasePerYear """).fetchall()
+

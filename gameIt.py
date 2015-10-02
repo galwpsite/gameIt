@@ -22,9 +22,29 @@ h=helper.Helper()
 @app.route('/')
 @flask_breadcrumbs.register_breadcrumb(app,'.','Home')
 def main():
-    #delete later
     return render_template('main.html',numOfGames=h.getNumOfGames(), numOfUsers=h.getNumOfUsers(),numOfLevels=h.getNumOfLevels(),numOfPurchases=h.getNumOfPurchases())
 
+
+@app.route('/home/reports')
+@flask_breadcrumbs.register_breadcrumb(app,'.Reports','Manage Reports')
+def mainReports():
+    return render_template('reports-main.html')
+
+
+@app.route('/home/reports/show',methods=['GET'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Reports','Manage Reports')
+def showReport():
+    q=request.args.get('q')
+    if q=='1':
+        rows = [dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3],r5=row[4],r6=row[5]
+                      ,r7=row[6],r8=row[7]) for row in h.reportLevelInfo() ]
+        return render_template('report-q1.html',title="Level Information",rows=rows)
+
+    elif (q=='2'):
+            rows = [dict(r1=row[0],r2=row[1],r3=row[1],r4=row[3],r5=row[4],r6=row[5],r7=row[6]
+                      ,r8=row[7]) for row in h.reportPurchasePerYear() ]
+            return render_template('report-q2.html',title="Level Information",rows=rows)
+    return render_template('reports-main.html')
 
 @app.route('/home/games',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Games','Games List')

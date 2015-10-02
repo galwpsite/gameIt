@@ -139,3 +139,7 @@ a.remove:after {
 a.criteria:hover {
     cursor: pointer;
 }
+
+ul.reports li strong {
+    cursor: pointer;
+}

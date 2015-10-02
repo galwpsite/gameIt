@@ -1,0 +1,23 @@
+{% extends "template.html" %}
+{% block content %}
+<h1 class="title">Manage Reports </h1>
+    <h4>Game Reports: </h4>
+    <ul class="reports">
+        <li title="ex2 q1" ><strong onclick="openReport('q1')">Level Information</strong>: <span >will show game information, level inofrmation, how many players got into the level and how many ranked it, and the avg ranking.</span></li>
+        <li title="ex2 q2" ><strong onclick="openReport('q2')">Purchases Per Year</strong> <span>return for every year and every game the information about the game, new users in each year, overall summery of income </span></li>
+    </ul>
+    <script>
+        function openReport(q) {
+            switch (q){
+                case "q1":
+                     window.open("{{ url_for('showReport') }}?q=1",'','width=1200,height=800');
+                    break;
+                case "q2":
+                     window.open("{{ url_for('showReport') }}?q=2",'','width=1200,height=800');
+                    break;
+
+            }
+
+    }
+    </script>
+{% endblock %}
