@@ -12,7 +12,44 @@
                 <input type="submit" value="Open Report" onclick="openReport('q3')" />
             </form>
         </li>
-
+       <li title="ex2" class="q4" ><strong>Get the most boring level a Game</strong>
+            <span>return the most boring level of a specif game</span>
+            <form class="hide" action="" >
+                <strong>Choose Game</strong>
+            </br>
+                <select id="listOfGames">
+                    {% for g in games %}
+                          <option value="{{ g.id }}">{{ g.id }} - {{ g.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Open Report" onclick="openReport('q4')" />
+            </form>
+        </li>
+       <li title="ex2" class="q5"><strong>Get Users who have more point then his friend in specif game</strong>
+            <span>return a list of users who are the best among their firends in a specif game</span>
+            <form class="hide" action="" >
+                <strong>Choose Game</strong>
+            </br>
+                <select id="listOfGames">
+                    {% for g in games %}
+                          <option value="{{ g.id }}">{{ g.id }}-{{ g.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Open Report" onclick="openReport('q5')" />
+            </form>
+        </li>
+        <li title="ex2 q6" class="q6" ><strong>Get users who passed Y level in Game X</strong>
+            <span>Return a list of users in passed year</span>
+            <form class="hide" action="" >
+                <select id="listOfGames">
+                    {% for g in games %}
+                          <option value="{{ g.id }}">{{ g.id }} - {{ g.name }}</option>
+                    {% endfor %}
+                </select>
+                <input class="y" type="text" name="y" placeholder="how many levels? (y)" data-validation-regexp="^[0-9]*$" data-validation="custom required"/>
+                <input type="submit" value="Open Report" onclick="openReport('q3')" />
+            </form>
+        </li>
     </ul>
     <script>
         function openReport(q) {
@@ -28,7 +65,21 @@
                         window.open("{{ url_for('showReport') }}?q=3&x=" + jQuery('form.q3 input.xval').val(), '', 'width=1200,height=800');
                     }
                     break;
-
+                case "q4":
+                    var x = jQuery( ".q4 #listOfGames" ).val();
+                    window.open("{{ url_for('showReport') }}?q=4&x="+x, '', 'width=1200,height=800');
+                    break;
+                case "q5":
+                    var x = jQuery( ".q5 #listOfGames" ).val();
+                        console.log(x)
+                    window.open("{{ url_for('showReport') }}?q=5&x="+x, '', 'width=1200,height=800');
+                    break;
+               case "q6":
+                    var x = jQuery( ".q6 #listOfGames" ).val();
+                    var y = jQuery( ".q6 .y" ).val();
+                        console.log(x)
+                    window.open("{{ url_for('showReport') }}?q=5&x="+x+"&y="+y, '', 'width=1200,height=800');
+                    break;
             }
     }
      $(document).ready(function () {

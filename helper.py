@@ -122,3 +122,17 @@ class Helper():
     def reportUsersWithXFriends(self,x):
         return self.__db_cursor.execute("""EXECUTE reportUsersWithXFriends ?""",x).fetchall()
 
+    def reportMostBoringLevelOfAGame(self,x):
+        return self.__db_cursor.execute("""EXECUTE reportMostBoringLevelOfAGame ?""",x).fetchall()
+
+
+    def getUserWithMostPointInGameX(self,x):
+        return self.__db_cursor.execute("""EXECUTE getUserWithMostPointInGameX ?""",x).fetchall()
+
+    def reportGetUsersWhoPlayedYLevelInGameX(self,x,y):
+        return self.__db_cursor.execute("""EXECUTE getUserWithMostPointInGameX ?, ?""",x,y).fetchall()
+
+
+    def getNumOfDownloadInGameXatMonthY(self,x,y):
+        return self.__db_cursor.execute("""EXECUTE getNumOfDownloadInGameXatMonthY ?,?""",x,y).fetchall()
+

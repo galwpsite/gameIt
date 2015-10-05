@@ -1,0 +1,25 @@
+{% extends 'report-show.html' %}
+{% block content %}
+    <table class="u-full-width">
+        <thread>
+            <th>Game No'</th>
+            <th>Game Name</th>
+            <th>No' of Levels</th>
+            <th>AVG Rank</th>
+            <th>No' of Players that Ranked</th>
+        </thread>
+        <tbody>
+            {% for r in rows %}
+                <tr>
+                    <td>{{ r.r1 }}</td>
+                    <td>{{ r.r2 }}</td>
+                    <td>{{ r.r3 }}</td>
+                    <td>{{ r.r4 }}</td>
+                    <td>{{ r.r5 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+{% endblock %}

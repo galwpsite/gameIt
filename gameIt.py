@@ -28,7 +28,8 @@ def main():
 @app.route('/home/reports')
 @flask_breadcrumbs.register_breadcrumb(app,'.Reports','Manage Reports')
 def mainReports():
-    return render_template('reports-main.html')
+    games= [dict(id=row[0],name=row[1],desc=row[2],c="") for row in h.getAllGames() ]
+    return render_template('reports-main.html',games=games)
 
 
 @app.route('/home/reports/show',methods=['GET'])
@@ -49,6 +50,21 @@ def showReport():
             xval=request.args.get('x')
             rows = [dict(r1=row[0],r2=row[1],r3=row[1],r4=row[3],r5=row[4],r6=row[5]) for row in h.reportUsersWithXFriends(xval) ]
             return render_template('report-q3.html',title="Friends with "+xval+" Game Requests which where sent by "+str(0.3*float(xval))+" diffrent friends",rows=rows)
+    elif (q=='4'):
+            xval=request.args.get('x')
+            rows = [dict(r1=row[0],r2=row[1],r3=row[1],r4=row[3],r5=row[4],r6=row[5]) for row in h.reportMostBoringLevelOfAGame(xval) ]
+            return render_template('report-q4.html',title="The most boring level in a specif game" ,rows=rows)
+    elif (q=='5'):
+            xval=request.args.get('x')
+            rows = [dict(r1=row[0],r2=row[1],r3=row[1]) for row in h.getUserWithMostPointInGameX(xval) ]
+            game=[dict(r1=row[0],r2=row[1]) for row in h.findGameByGameNo(xval)]
+            return render_template('report-q5.html',title="The users who are best among their friends in " + game[0].get('r2') ,rows=rows)
+    elif (q=='6'):
+            xval=request.args.get('x')
+            yval=request.args.get('y')
+            rows = [dict(r1=row[0],r2=row[1],r3=row[1]) for row in h.getUserWithMostPointInGameX(xval) ]
+            game=[dict(r1=row[0],r2=row[1]) for row in h.findGameByGameNo(xval)]
+            return render_template('report-q5.html',title="The users who are best among their friends in " + game[0].get('r2') ,rows=rows)
     return render_template('reports-main.html')
 
 @app.route('/home/games',methods=['GET','POST'])
@@ -91,8 +107,15 @@ def gameEdit():
     gameUnusedCriteria = [dict(cNo=row[0],cName=row[1])  for row in h.getFreeGameCriteria()]
     gameName = (game[0].get('name'))
     gameDesc = (game[0].get('desc'))
+    gameDownloads=[]
+    for month in range (1,13):
+        try:
+            gameDownloads.append([dict(r1=row[0])  for row in h.getNumOfDownloadInGameXatMonthY(gameNo,month)][0].get('r1'))
+        except IndexError:
+            gameDownloads.append(0)
+        print ("month "+ str(month) +" downloads: " + str(gameDownloads[month-1]))
     return render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Edit Game: "+gameName,gameNo=gameNo,gameName=gameName,gameDesc=gameDesc,
-                           gameCriteria=gameCriteria,gameUnusedCriteria=gameUnusedCriteria,showCriteria=True)
+                           gameCriteria=gameCriteria,gameUnusedCriteria=gameUnusedCriteria,showCriteria=True,gameDownloads=gameDownloads)
 
 @app.route('/home/games/add',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Games.Add','Add Game')

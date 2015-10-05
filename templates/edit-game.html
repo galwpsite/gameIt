@@ -19,10 +19,32 @@
     <div class="columns six">
         <h5>Quick Stats:</h5>
         <p> stats goes here </p>
-       <strong><a href="#">More Info</a></strong>
+       <strong><a href="#">Downloads Per Month</a></strong>
+        <canvas id="myChart" width="400" height="400"></canvas>
 {#        todo add more info link#}
     </div>
 </div>
+    <script>
+    var data = {
+    labels: ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"],
+    datasets: [
+        {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0.5)",
+            strokeColor: "rgba(151,187,205,0.8)",
+            highlightFill: "rgba(151,187,205,0.75)",
+            highlightStroke: "rgba(151,187,205,1)",
+            data: [
+                {% for gd in gameDownloads %}
+                {{ gd }},
+                {% endfor %}
+            ]
+        }
+    ]
+};
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var myBarChart = new Chart(ctx).Bar(data,"");
+    </script>
     <script>
     $.validate();
     </script>
