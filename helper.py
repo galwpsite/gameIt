@@ -139,3 +139,13 @@ class Helper():
     def getUsersWhoDownloadedGameX(self,x):
         return self.__db_cursor.execute("""EXECUTE getUsersWhoDownloadedGameX ?""",x).fetchall()
 
+    def getUserByID(self,x):
+        return self.__db_cursor.execute("""EXECUTE getUserByID ?""",x).fetchall()
+
+    def getGamesWhichWereDownloadedByUserX(self,x):
+        return self.__db_cursor.execute("""EXECUTE getGamesWhichWereDownloadedByUserX ?""",x).fetchall()
+
+
+    def getFriendsOfUserX(self,x):
+        return self.__db_cursor.execute("""EXECUTE getFriendsOfUserX ?""",x).fetchall()
+

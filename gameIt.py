@@ -9,10 +9,13 @@ import helper
 import flask_breadcrumbs
 from flask_menu import Menu, register_menu
 
+
+
 app = Flask(__name__)
 # set the secret key.  keep this really secret:
 app.secret_key = '3nMN*sBNjh#pjG*yGSKBZ5&ePG2eAmc^pcGG7KYXtSugvb2Ee$rW9$6gSNRpeAU$%BrfpGkhvHV6@heD2RTQ2pbk9cwHwAZVMyKz'
-
+UPLOAD_FOLDER = 'c:/gameIt/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 Menu(app=app)
 flask_breadcrumbs.Breadcrumbs(app=app)
 
@@ -233,6 +236,34 @@ def removeGameCriteria():
     print (cCode)
     h.removeGameCriteria(cCode)
     return "<script>window.close();</script>"
+
+
+@app.route('/userView',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.User','User')
+def userView():
+    id = request.args.get('id')
+    user=[dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3]) for row in h.getUserByID(id)]
+    games = [dict(r1=row[0],r2=row[1]) for row in h.getGamesWhichWereDownloadedByUserX(id)]
+    friendsID = [dict(r1=row[4],r2=row[5]) for row in h.getFriendsOfUserX(id)]
+    friends=[]
+    for friendID in friendsID:
+        if int(friendID.get('r2')) == int(id):
+            print ("boom")
+            friends.append([dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3]) for row in h.getUserByID(friendID.get('r1'))][0])
+        else:
+            friends.append([dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3]) for row in h.getUserByID(friendID.get('r2'))][0])
+    return render_template('view-user.html',user=user[0],games=games,friends=friends)
+
+@app.route('/importFile',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Import','Import')
+def importFile():
+    if request.method == 'POST':
+        form=request.form
+        file = request.files['file']
+        dataType=form['dataType']
+        print(dataType)
+        print (file.filename)
+    return render_template('import.html')
 
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')

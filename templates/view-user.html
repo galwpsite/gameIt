@@ -1,26 +1,29 @@
 {% extends "archive.html" %}
-{% block search %}
- <div class="row">
-    <div class="columns six"><h5>{{ pageSubTitle }}</h5> <strong><a href="{{ url_for('gameAdd') }}" class="cl-green"><i class="fa fa-plus"></i> Add New Game </a></strong></div>
-    <div class="columns five offset-by-one">
-         <form action="" method="post">
-            <input type="text" name="name" value="{{request.form.name }}" placeholder="Game Name"/>
-            <input type="submit" value="Search" name="search-form" />
-        </form>
-    </div>
- </div>
-{% endblock %}
+
 
 {% block loop %}
 <div class="row">
     <div class="columns six">
-        {% include 'game-form.html' %}
+        <h3>User Info:</h3>
+        <strong>UserNo: </strong> {{ user.r1 }}
+        </br>
+        <strong>NickName: </strong> {{ user.r3 }}
+        </br>
+        <strong>Email:</strong> <a href="mailto:{{ user.r2 }}">{{ user.r2 }}</a>
+        </br>
+        <strong>Registration Date: </strong> {{ user.r4 }}<br>
+        <h4>Friends:</h4>
+    <ul>
+        {% for f in friends %}
+            <li><a href="{{ url_for('userView') }}?id={{ f.r1 }}">{{ f.r3}} </a> </li>
+        {% endfor %}
+    </ul>
     </div>
     <div class="columns six">
-        <h5>Users:</h5>
+        <h5>Game List:</h5>
         <ul>
-            {% for user in users %}
-                <li><a href="{{ url_for('userView') }}?id={{ user.r1 }}">{{ user.r2 }} (ID - {{ user.r1 }})</a></li>
+            {% for game in games %}
+                <li><a href="{{ url_for('gameEdit') }}?gameNo={{ game.r1 }}">{{ game.r2 }} (ID - {{ game.r1 }})</a></li>
             {% endfor %}
         </ul>
        <strong><a href="#">Downloads Per Month</a></strong>

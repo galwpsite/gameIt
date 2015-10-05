@@ -1,0 +1,20 @@
+{% extends "archive.html" %}
+
+
+{% block loop %}
+<h2>Import Data:</h2>
+    <form action="" method="post" enctype=multipart/form-data>
+      <input type=file name=file accept=".csv" data-validation="required">
+        <br>
+        <lable>Data Type:</lable>
+            <input type="radio" name="dataType" value="tblPlaysIn" checked>tblPlaysIn</input>
+            <input type="radio" name="dataType" value="tblPurchase">tblPurchase</input>
+            <input type="radio" name="dataType" value="tblDownload">tblDownload</input>
+            <input type="radio" name="dataType" value="tblUser">tblUser</input>
+        <br>
+      <input type="submit" value="Upload">
+    </form>
+    <script>
+       $.validate();
+    </script>
+{% endblock %}
