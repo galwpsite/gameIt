@@ -17,8 +17,12 @@
         {% include 'game-form.html' %}
     </div>
     <div class="columns six">
-        <h5>Quick Stats:</h5>
-        <p> stats goes here </p>
+        <h5>Users:</h5>
+        <ul>
+            {% for user in users %}
+                <li><a href="userView?id={{ user.r1 }}">{{ user.r2 }} (ID - {{ user.r1 }})</a></li>
+            {% endfor %}
+        </ul>
        <strong><a href="#">Downloads Per Month</a></strong>
         <canvas id="myChart" width="400" height="400"></canvas>
 {#        todo add more info link#}

@@ -105,6 +105,7 @@ def gameEdit():
     game= [dict(id=row[0],name=row[1],desc=row[2]) for row in h.findGameByGameNo(gameNo)]
     gameCriteria=[dict(cNo=row[0],cName=row[1])  for row in h.getGameCriteria(gameNo)]
     gameUnusedCriteria = [dict(cNo=row[0],cName=row[1])  for row in h.getFreeGameCriteria()]
+    users = [dict(r1=row[0],r2=row[1])  for row in h.getUsersWhoDownloadedGameX(gameNo)]
     gameName = (game[0].get('name'))
     gameDesc = (game[0].get('desc'))
     gameDownloads=[]
@@ -115,7 +116,7 @@ def gameEdit():
             gameDownloads.append(0)
         print ("month "+ str(month) +" downloads: " + str(gameDownloads[month-1]))
     return render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Edit Game: "+gameName,gameNo=gameNo,gameName=gameName,gameDesc=gameDesc,
-                           gameCriteria=gameCriteria,gameUnusedCriteria=gameUnusedCriteria,showCriteria=True,gameDownloads=gameDownloads)
+                           gameCriteria=gameCriteria,gameUnusedCriteria=gameUnusedCriteria,showCriteria=True,gameDownloads=gameDownloads,users=users)
 
 @app.route('/home/games/add',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Games.Add','Add Game')

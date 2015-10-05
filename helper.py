@@ -136,3 +136,6 @@ class Helper():
     def getNumOfDownloadInGameXatMonthY(self,x,y):
         return self.__db_cursor.execute("""EXECUTE getNumOfDownloadInGameXatMonthY ?,?""",x,y).fetchall()
 
+    def getUsersWhoDownloadedGameX(self,x):
+        return self.__db_cursor.execute("""EXECUTE getUsersWhoDownloadedGameX ?""",x).fetchall()
+
