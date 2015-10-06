@@ -8,7 +8,8 @@ import pyodbc
 import helper
 import flask_breadcrumbs
 from flask_menu import Menu, register_menu
-
+import csv
+from io import TextIOWrapper
 
 
 app = Flask(__name__)
@@ -261,8 +262,24 @@ def importFile():
         form=request.form
         file = request.files['file']
         dataType=form['dataType']
-        print(dataType)
-        print (file.filename)
+        file.save('c:/uploads/temp.csv')
+        data=[]
+        with open('c:/uploads/temp.csv', 'rb') as csvfile:
+            spamreader = csv.reader(TextIOWrapper(csvfile),dialect='excel', quotechar='|')
+            for entity in spamreader:
+                i=0
+                if dataType=='tblUser':
+                    for row in entity:
+                        data.append(row)
+                        print (row)
+                        i+=1
+                        if i>=4:
+                            if (h.adduser(data[0],data[1],data[2],data[3])):
+                                flash("User  " + data[2]+" was successfully added")
+                            else:
+                                flash("Could not add the user " + data[2]+" Maybe ID("+data[0]+") already exit?",'error')
+                            data=[]
+                            break
     return render_template('import.html')
 
 @app.errorhandler(404)

@@ -149,3 +149,9 @@ class Helper():
     def getFriendsOfUserX(self,x):
         return self.__db_cursor.execute("""EXECUTE getFriendsOfUserX ?""",x).fetchall()
 
+    def adduser(self,r1,r2,r3,r4):
+        try:
+            self.__db_cursor.execute("""EXECUTE adduser  ?,?,?,? """,r1,r2,r3,r4)
+            return True
+        except pyodbc.IntegrityError:
+            return False
