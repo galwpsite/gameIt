@@ -266,6 +266,8 @@ def importFile():
         data=[]
         with open('c:/uploads/temp.csv', 'rb') as csvfile:
             spamreader = csv.reader(TextIOWrapper(csvfile),dialect='excel', quotechar='|')
+            e=0
+            s=0
             for entity in spamreader:
                 i=0
                 if dataType=='tblUser':
@@ -275,11 +277,25 @@ def importFile():
                         i+=1
                         if i>=4:
                             if (h.adduser(data[0],data[1],data[2],data[3])):
-                                flash("User  " + data[2]+" was successfully added")
+                                s+=1
                             else:
-                                flash("Could not add the user " + data[2]+" Maybe ID("+data[0]+") already exit?",'error')
+                                e+=1
                             data=[]
                             break
+                elif dataType=="tblPlaysIn":
+                    for row in entity:
+                        data.append(row)
+                        print (row)
+                        i+=1
+                        if i>=6:
+                            if (h.addPlaysIn(data[0],data[1],data[2],data[3],data[4],data[5])):
+                                s+=1
+                            else:
+                                e+=1
+                            data=[]
+                            break
+            flash (str(s)+" Entites were succsfully added")
+            flash (str(e)+ " Entties faild to be added", 'error')
     return render_template('import.html')
 
 @app.errorhandler(404)

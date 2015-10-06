@@ -155,3 +155,10 @@ class Helper():
             return True
         except pyodbc.IntegrityError:
             return False
+
+    def addPlaysIn(self,r1,r2,r3,r4,r5,r6):
+        try:
+            self.__db_cursor.execute("""EXECUTE addPlaysIn  ?,?,?,?,?,?""",r1,r2,r3,r4,r5,r6)
+            return True
+        except pyodbc.IntegrityError:
+            return False
