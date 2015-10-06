@@ -294,6 +294,30 @@ def importFile():
                                 e+=1
                             data=[]
                             break
+                elif dataType=="tblPurchase":
+                    for row in entity:
+                        data.append(row)
+                        print (row)
+                        i+=1
+                        if i>=7:
+                            if (h.addPurchase(data[0],data[1],data[2],data[3],data[4],data[5],data[6])):
+                                s+=1
+                            else:
+                                e+=1
+                            data=[]
+                            break
+                elif dataType=="tblDownload":
+                    for row in entity:
+                        data.append(row)
+                        print (row)
+                        i+=1
+                        if i>=5:
+                            if (h.addDownload(data[0],data[1],data[2],data[3],data[4])):
+                                s+=1
+                            else:
+                                e+=1
+                            data=[]
+                            break
             flash (str(s)+" Entites were succsfully added")
             flash (str(e)+ " Entties faild to be added", 'error')
     return render_template('import.html')

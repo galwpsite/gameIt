@@ -162,3 +162,17 @@ class Helper():
             return True
         except pyodbc.IntegrityError:
             return False
+
+    def addPurchase(self,r1,r2,r3,r4,r5,r6,r7):
+        try:
+            self.__db_cursor.execute("""EXECUTE addPurchase  ?,?,?,?,?,?,?""",r1,r2,r3,r4,r5,r6,r7)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+    def addDownload(self,r1,r2,r3,r4,r5):
+        try:
+            self.__db_cursor.execute("""EXECUTE addDownload  ?,?,?,?,?""",r1,r2,r3,r4,r5)
+            return True
+        except pyodbc.IntegrityError:
+            return False
