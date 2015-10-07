@@ -4,7 +4,8 @@
         <thread>
             <th>User No'</th>
             <th>Nick Name</th>
-            <th>High Score</th>
+            <th>Senirotiy</th>
+            <th>No' of games</th>
         </thread>
         <tbody>
             {% for r in rows %}
@@ -12,6 +13,7 @@
                     <td>{{ r.r1 }}</td>
                     <td>{{ r.r2 }}</td>
                     <td>{{ r.r3 }}</td>
+                    <td>{{ r.r4 }}</td>
                 </tr>
             {% endfor %}
         </tbody>

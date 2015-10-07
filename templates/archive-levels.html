@@ -1,0 +1,13 @@
+{% extends "template.html" %}
+{% block content %}
+<h1 class="title">Manage Levels</h1>
+    <h4>Edit Existing Levels: <small>(Choose a Game)</small></h4>
+    <ul>
+    {% for g in games %}
+        <li><a href="{{ url_for('editGameLevels') }}?gameNo={{ g.r1 }}">{{ g.r2 }} ({{ g.r3 }} levels)</a></li>
+    {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('addLevel') }}" class="button">Add New Level</a>
+
+{% endblock %}  

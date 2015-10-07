@@ -1,0 +1,33 @@
+{% extends "template.html" %}
+{% block content %}
+<h1 class="title">Manage Levels</h1>
+<h4>Edit level: </h4>
+<div class="row">
+    <div class="column one-half">
+        <form action="" method="post" class="edit">
+                    <p><label>Game: </label>  <input type="text" class="id" name="id" value="{{ game.r2 }}"  readonly/></p>
+                    <p><label>Level No: </label>  <input type="text" class="id" name="id" value="{{ level.r1 }}" readonly /></p>
+                    <p> <label>Type:</label>
+                        <select name="levelType">
+                            {% for lt in leveltypes %}
+                                <option {% if lt.r1 == level.r5 %} selected="selected" {% endif %} value="{{ lt.r1 }}"> {{ lt.r2 }} </option>
+                            {% endfor %}
+                        </select> <a href="#">Edit Type</a>
+                    </p>
+
+        <p><label>Points for:  <i class="fa fa-star"></i> </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" name="star1" value="{{ level.r2 }}" /></p>
+        <p><label>Points for:  <i class="fa fa-star"></i> <i class="fa fa-star"></i> </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" name="star2" value="{{ level.r3 }}" /></p>
+        <p><label>Points for:  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" name="star3" value="{{ level.r4 }}" /></p>
+                    <p><input type="submit" value="Save Changes"/> </p>
+            <a href="#" onclick="remove()" class="button cl-red u-full-width ">Remove </a>
+                </form>
+    </div>
+</div>
+<script>
+    $.validate();
+        function remove() {
+            if (confirm('Are you sure you want to remove this entity?'))
+                window.open("{{ url_for('deleteLevel') }}?levelNo={{ level.r1 }}&gameNo={{ game.r1 }}","_self");
+    }
+</script>
+{% endblock %}  

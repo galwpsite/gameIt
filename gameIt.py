@@ -60,15 +60,15 @@ def showReport():
             return render_template('report-q4.html',title="The most boring level in a specif game" ,rows=rows)
     elif (q=='5'):
             xval=request.args.get('x')
-            rows = [dict(r1=row[0],r2=row[1],r3=row[1]) for row in h.getUserWithMostPointInGameX(xval) ]
+            rows = [dict(r1=row[0],r2=row[1],r3=row[2]) for row in h.getUserWithMostPointInGameX(xval) ]
             game=[dict(r1=row[0],r2=row[1]) for row in h.findGameByGameNo(xval)]
             return render_template('report-q5.html',title="The users who are best among their friends in " + game[0].get('r2') ,rows=rows)
     elif (q=='6'):
             xval=request.args.get('x')
             yval=request.args.get('y')
-            rows = [dict(r1=row[0],r2=row[1],r3=row[1]) for row in h.getUserWithMostPointInGameX(xval) ]
+            rows = [dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3]) for row in h.reportGetUsersWhoPlayedYLevelInGameX(xval,yval) ]
             game=[dict(r1=row[0],r2=row[1]) for row in h.findGameByGameNo(xval)]
-            return render_template('report-q5.html',title="The users who are best among their friends in " + game[0].get('r2') ,rows=rows)
+            return render_template('report-q6.html',title="Users who played  "+yval +" in the " + game[0].get('r2') ,rows=rows)
     return render_template('reports-main.html')
 
 @app.route('/home/games',methods=['GET','POST'])
@@ -322,6 +322,74 @@ def importFile():
             flash (str(e)+ " Entties faild to be added", 'error')
     return render_template('import.html')
 
+@app.route('/levels',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Levels','Levels')
+def manageLevels():
+    games = [dict(r1=row[0],r2=row[1],r3=row[2]) for row in h.getAllGameWithLevels()]
+    return render_template("archive-levels.html",games=games)
+
+
+@app.route('/home/levels/gameLevels',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Levels.GameLevel','Edit Game Levels')
+def editGameLevels():
+    gameNo = request.args.get('gameNo')
+    game = [dict(r1=row[0],r2=row[1],r3=row[2]) for row in h.findGameByGameNo(gameNo)][0]
+    levels = [dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3],r5=row[5]) for row in h.getLevelsOfGameX(gameNo)]
+    return render_template("edit-gameLevels.html",game=game,levels=levels,gameNo=gameNo)
+
+@app.route('/home/levels/editLevel',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Levels.EditLevel','Edit Level')
+def editLevel():
+    if request.method == 'POST':
+        form=request.form
+        gameNo = request.args.get('gameNo')
+        levelNo=request.args.get('levelNo')
+        typeNo=(form['levelType'])
+        star1=(form['star1'])
+        star2=(form['star2'])
+        star3=(form['star3'])
+        if (h.updateLevel(gameNo,levelNo,star1,star2,star3,typeNo)):
+            flash("Level Succsfully Updated")
+        else:
+            flash ("An error as accored trying to update the level",'error')
+    gameNo = request.args.get('gameNo')
+    levelNo=request.args.get('levelNo')
+    level = [dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3],r5=row[4],r6=row[5]) for row in h.getlevelXofGameY(levelNo,gameNo)][0]
+    game = [dict(r1=row[0],r2=row[1],r3=row[2]) for row in h.findGameByGameNo(gameNo)][0]
+    leveltypes = [dict(r1=row[0],r2=row[1]) for row in h.getLevelTypes()]
+    return render_template("editLevel.html",level=level,leveltypes=leveltypes,game=game)
+
+@app.route('/home/levels/add',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Levels.Add','Add Level')
+def addLevel():
+    if request.method == 'POST':
+        form=request.form
+        gameNo =(form['gameNo'])
+        levelNo=(form['levelNo'])
+        typeNo=(form['levelType'])
+        star1=(form['star1'])
+        star2=(form['star2'])
+        star3=(form['star3'])
+        print(gameNo+levelNo+star1+star2+star3+typeNo)
+        if (h.addLevel(gameNo,levelNo,star1,star2,star3,typeNo)):
+            flash("Level Succsfully Updated")
+            return redirect(url_for('editLevel')+'?gameNo='+gameNo+'&levelNo='+levelNo)
+        else:
+            flash ("An error as accored trying to add the level",'error')
+
+    games= [dict(r1=row[0],r2=row[1],r3=row[2]) for row in h.getAllGames()]
+    leveltypes = [dict(r1=row[0],r2=row[1]) for row in h.getLevelTypes()]
+    return render_template("addLevel.html",games=games,leveltypes=leveltypes)
+@app.route('/home/levels/deleteLevel',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Levels.DeleteLevel','Delete Level')
+def deleteLevel():
+        gameNo = request.args.get('gameNo')
+        levelNo=request.args.get('levelNo')
+        if h.deleteLevel(levelNo,gameNo):
+            flash("Level was deleted")
+        else:
+            flash ("Could Not Delete Level",'error')
+        return redirect(url_for('manageLevels'))
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')
 def page_not_found(e):

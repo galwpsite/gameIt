@@ -47,6 +47,28 @@ class Helper():
         except pyodbc.IntegrityError:
             return False
 
+    def deleteLevel (self,levelNo,gameNo):
+        try:
+            self.__db_cursor.execute("""EXECUTE deleteLevel  ?,? """,levelNo,gameNo)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+    def updateLevel (self,gameNo,levelNo,star1,star2,star3,typeNo):
+        try:
+            self.__db_cursor.execute("""EXECUTE updateLevel  ?,?,?,?,?,?""",gameNo,levelNo,star1,star2,star3,typeNo)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+    def addLevel (self,gameNo,levelNo,star1,star2,star3,typeNo):
+
+        try:
+            self.__db_cursor.execute("""EXECUTE addLevel  ?,?,?,?,?,?""",gameNo,levelNo,star1,star2,star3,typeNo)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
     def getGameCriteria (self,gameNo):
         return self.__db_cursor.execute("""EXECUTE getGameCriteria ? """,gameNo).fetchall()
 
@@ -130,7 +152,7 @@ class Helper():
         return self.__db_cursor.execute("""EXECUTE getUserWithMostPointInGameX ?""",x).fetchall()
 
     def reportGetUsersWhoPlayedYLevelInGameX(self,x,y):
-        return self.__db_cursor.execute("""EXECUTE getUserWithMostPointInGameX ?, ?""",x,y).fetchall()
+        return self.__db_cursor.execute("""EXECUTE reportGetUsersWhoPlayedYLevelInGameX ?, ?""",x,y).fetchall()
 
 
     def getNumOfDownloadInGameXatMonthY(self,x,y):
@@ -145,9 +167,22 @@ class Helper():
     def getGamesWhichWereDownloadedByUserX(self,x):
         return self.__db_cursor.execute("""EXECUTE getGamesWhichWereDownloadedByUserX ?""",x).fetchall()
 
+    def getAllGameWithLevels(self):
+        return self.__db_cursor.execute("""EXECUTE getAllGameWithLevels """).fetchall()
+
+
+    def getLevelTypes(self):
+        return self.__db_cursor.execute("""EXECUTE getLevelTypes """).fetchall()
+
 
     def getFriendsOfUserX(self,x):
         return self.__db_cursor.execute("""EXECUTE getFriendsOfUserX ?""",x).fetchall()
+
+    def getLevelsOfGameX(self,x):
+        return self.__db_cursor.execute("""EXECUTE getLevelsOfGameX ?""",x).fetchall()
+
+    def getlevelXofGameY(self,x,y):
+        return self.__db_cursor.execute("""EXECUTE getlevelXofGameY ?,?""",x,y).fetchall()
 
     def adduser(self,r1,r2,r3,r4):
         try:

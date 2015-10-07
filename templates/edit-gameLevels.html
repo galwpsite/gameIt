@@ -1,0 +1,31 @@
+{% extends "template.html" %}
+{% block content %}
+<h1 class="title">Manage Levels</h1>
+<h4>Levels of {{ game.r2 }}: </h4>
+  <table class="u-full-width">
+                <thread>
+                    <th>Level No'</th>
+                    <th>Type Name</th>
+                    <th><i class="fa fa-star"></i></th>
+                    <th><i class="fa fa-star"></i><i class="fa fa-star"></i></th>
+                    <th><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></th>
+                </thread>
+            <tbody>
+            {% for l in levels %}
+                <tr class="link" onclick="editLevel({{ l.r1 }})">
+                    <td>{{ l.r1 }}</td>
+                    <td>{{ l.r5 }}</td>
+                    <td>{{ l.r2 }}</td>
+                    <td>{{ l.r3 }}</td>
+                    <td>{{ l.r4 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    <script>
+        function editLevel(levelNo) {
+                window.open("{{ url_for('editLevel') }}?levelNo="+levelNo+"&gameNo={{ gameNo }}","_self");
+    }
+
+    </script>
+{% endblock %}  
