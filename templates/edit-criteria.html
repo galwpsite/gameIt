@@ -14,10 +14,15 @@
 {% block loop %}
 <div class="row">
     <div class="columns six">
-        {% include 'criteria-form.html' %}
+        {% include 'criteria-form.html' %} <Br>
+          <a href="#" onclick="remove()" class="button cl-red  ">Remove </a>
     </div>
 </div>
     <script>
+    function remove() {
+            if (confirm('Are you sure you want to delete this criteria'))
+                window.open("{{ url_for('deleteCritX') }}?x={{request.args.cCode }}","_self");
+    }
     $.validate();
     </script>
 {% endblock %}  

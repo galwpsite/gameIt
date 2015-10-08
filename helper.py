@@ -82,6 +82,13 @@ class Helper():
         except pyodbc.IntegrityError:
             return False
 
+    def deleteCritX (self,x):
+        try:
+            self.__db_cursor.execute("""EXECUTE deleteCritX  ? """,x)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
 
     def updateLevel (self,gameNo,levelNo,star1,star2,star3,typeNo):
         try:

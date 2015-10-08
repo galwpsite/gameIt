@@ -438,6 +438,16 @@ def deleteLevelType():
             flash ("Could Not Delete Level Type",'error')
         return redirect(url_for('manageLevels'))
 
+@app.route('/home/criteria/delete',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Criterias.Delete','Delete Crit')
+def deleteCritX():
+        x=request.args.get('x')
+        if h.deleteCritX(x):
+            flash("Criteria was deleted")
+        else:
+            flash ("Could Not Delete Criteria",'error')
+        return redirect(url_for('criterias'))
+
 
 
 @app.route('/requests/types',methods=['GET','POST'])
