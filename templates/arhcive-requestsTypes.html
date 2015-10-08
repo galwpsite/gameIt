@@ -1,0 +1,13 @@
+{% extends "template.html" %}
+{% block content %}
+<h1 class="title">Manage Levels</h1>
+    <h4>Edit Existing Request Typers: </h4>
+    <ul>
+    {% for r in requests %}
+        <li><a href="{{ url_for('editRequestType') }}?typeNo={{ g.r1 }}">{{ r.r2 }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('addLevel') }}" class="button">Add New Level</a>
+
+{% endblock %}  

@@ -12,7 +12,7 @@
         <strong>Email:</strong> <a href="mailto:{{ user.r2 }}">{{ user.r2 }}</a>
         </br>
         <strong>Registration Date: </strong> {{ user.r4 }}<br>
-        <h4>Friends:</h4>
+            <h4>Friends:</h4>
     <ul>
         {% for f in friends %}
             <li><a href="{{ url_for('userView') }}?id={{ f.r1 }}">{{ f.r3}} </a> </li>
@@ -26,11 +26,37 @@
                 <li><a href="{{ url_for('gameEdit') }}?gameNo={{ game.r1 }}">{{ game.r2 }} (ID - {{ game.r1 }})</a></li>
             {% endfor %}
         </ul>
-       <strong><a href="#">Downloads Per Month</a></strong>
+       <strong><a href="#">Purchases Per Month</a></strong>
         <canvas id="myChart" width="400" height="400"></canvas>
 {#        todo add more info link#}
     </div>
 </div>
+    <div class="row">
+      <h4> List of Purchases:</h4>
+  <table class="u-full-width">
+                <thread>
+                    <th>Purchase No'</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Game</th>
+                </thread>
+            <tbody>
+            {% for p in purchases %}
+                <tr>
+                    <td>{{ p.r1 }}</td>
+                    <td>{{ p.r2 }}</td>
+                    <td>{{ p.r3 }}</td>
+                    <td>{{ p.r4 }}</td>
+                    <td>{{ p.r5 }}</td>
+                    <td>{{ p.r8 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
     <script>
     var data = {
     labels: ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"],
@@ -42,8 +68,8 @@
             highlightFill: "rgba(151,187,205,0.75)",
             highlightStroke: "rgba(151,187,205,1)",
             data: [
-                {% for gd in gameDownloads %}
-                {{ gd }},
+                {% for up in userPurchasesAmount %}
+                {{ up }},
                 {% endfor %}
             ]
         }

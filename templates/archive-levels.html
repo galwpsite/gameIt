@@ -10,4 +10,10 @@
 
     <a href="{{ url_for('addLevel') }}" class="button">Add New Level</a>
 
+    <h4>Manage Level Types:</h4>
+    <ul>
+    {% for lt in levelTypes %}
+        <li><a href="{{url_for('editLevelType')}}?id={{ lt.r1 }}">{{ lt.r2 }}</a></li>
+    {% endfor %}
+    </ul>
 {% endblock %}  

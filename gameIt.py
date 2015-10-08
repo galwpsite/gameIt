@@ -110,6 +110,7 @@ def gameEdit():
     gameCriteria=[dict(cNo=row[0],cName=row[1])  for row in h.getGameCriteria(gameNo)]
     gameUnusedCriteria = [dict(cNo=row[0],cName=row[1])  for row in h.getFreeGameCriteria()]
     users = [dict(r1=row[0],r2=row[1])  for row in h.getUsersWhoDownloadedGameX(gameNo)]
+    gameLevels=levels = [dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3],r5=row[5]) for row in h.getLevelsOfGameX(gameNo)]
     gameName = (game[0].get('name'))
     gameDesc = (game[0].get('desc'))
     gameDownloads=[]
@@ -120,7 +121,8 @@ def gameEdit():
             gameDownloads.append(0)
         print ("month "+ str(month) +" downloads: " + str(gameDownloads[month-1]))
     return render_template('edit-game.html',pageTitle="Manage Games",pageSubTitle="Edit Game: "+gameName,gameNo=gameNo,gameName=gameName,gameDesc=gameDesc,
-                           gameCriteria=gameCriteria,gameUnusedCriteria=gameUnusedCriteria,showCriteria=True,gameDownloads=gameDownloads,users=users)
+                           gameCriteria=gameCriteria,gameUnusedCriteria=gameUnusedCriteria,showCriteria=True,
+                           gameDownloads=gameDownloads,users=users,gameLevels=gameLevels)
 
 @app.route('/home/games/add',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Games.Add','Add Game')
@@ -209,8 +211,8 @@ def criteriaEdit():
                 critNo=(form['id'])
                 critName = (form['critName'])
                 critAmount = (form['critAmount'])
-                if h.updateGame(int(critNo),critName,critAmount):
-                    flash("The game "+critName+" successfully updated.")
+                if h.updateCrit(int(critNo),critName,critAmount):
+                    flash("The Criteria "+critName+" successfully updated.")
                 else :
                     flash("Something went wrong",'error')
     critNo = request.args.get('cCode')
@@ -247,13 +249,21 @@ def userView():
     games = [dict(r1=row[0],r2=row[1]) for row in h.getGamesWhichWereDownloadedByUserX(id)]
     friendsID = [dict(r1=row[4],r2=row[5]) for row in h.getFriendsOfUserX(id)]
     friends=[]
+    userPurchasesAmount=[]
+    purchases= [dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3],r5=row[4],r6=row[5],r7=row[6],r8=row[7]) for row in h.getPurchasesOfUserX(id)]
+    for month in range (1,13):
+        try:
+            userPurchasesAmount.append([dict(r1=row[0])  for row in h.getPurchasesOfUserXinMonthY(id,month)][0].get('r1'))
+            if userPurchasesAmount[month-1]==None:
+                userPurchasesAmount[month-1]=0
+        except IndexError:
+            userPurchasesAmount.append(0)
     for friendID in friendsID:
         if int(friendID.get('r2')) == int(id):
-            print ("boom")
             friends.append([dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3]) for row in h.getUserByID(friendID.get('r1'))][0])
         else:
             friends.append([dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3]) for row in h.getUserByID(friendID.get('r2'))][0])
-    return render_template('view-user.html',user=user[0],games=games,friends=friends)
+    return render_template('view-user.html',user=user[0],games=games,friends=friends,userPurchasesAmount=userPurchasesAmount,purchases=purchases)
 
 @app.route('/importFile',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Import','Import')
@@ -326,7 +336,8 @@ def importFile():
 @flask_breadcrumbs.register_breadcrumb(app,'.Levels','Levels')
 def manageLevels():
     games = [dict(r1=row[0],r2=row[1],r3=row[2]) for row in h.getAllGameWithLevels()]
-    return render_template("archive-levels.html",games=games)
+    levelTypes= [dict(r1=row[0],r2=row[1]) for row in h.getAllLevelTypes()]
+    return render_template("archive-levels.html",games=games,levelTypes=levelTypes)
 
 
 @app.route('/home/levels/gameLevels',methods=['GET','POST'])
@@ -359,6 +370,22 @@ def editLevel():
     leveltypes = [dict(r1=row[0],r2=row[1]) for row in h.getLevelTypes()]
     return render_template("editLevel.html",level=level,leveltypes=leveltypes,game=game)
 
+
+@app.route('/home/levels/edit/levelType',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Levels.EditLevelType','Edit Level Type')
+def editLevelType():
+    if request.method == 'POST':
+        form=request.form
+        leveltypeNo=(form['leveltypeNo'])
+        name=(form['name'])
+        if (h.updateLevel(gameNo,levelNo,star1,star2,star3,typeNo)):
+            flash("Level Succsfully Updated")
+        else:
+            flash ("An error as accored trying to update the level",'error')
+    id = request.args.get('id')
+    levelType = [dict(r1=row[0],r2=row[1]) for row in h.getAllLevelTypeX(id)][0]
+    return render_template("editLevelType.html",levelType=levelType)
+
 @app.route('/home/levels/add',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Levels.Add','Add Level')
 def addLevel():
@@ -380,6 +407,7 @@ def addLevel():
     games= [dict(r1=row[0],r2=row[1],r3=row[2]) for row in h.getAllGames()]
     leveltypes = [dict(r1=row[0],r2=row[1]) for row in h.getLevelTypes()]
     return render_template("addLevel.html",games=games,leveltypes=leveltypes)
+
 @app.route('/home/levels/deleteLevel',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Levels.DeleteLevel','Delete Level')
 def deleteLevel():
@@ -390,6 +418,40 @@ def deleteLevel():
         else:
             flash ("Could Not Delete Level",'error')
         return redirect(url_for('manageLevels'))
+
+@app.route('/home/levels/deleteLevelType',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Levels.DeleteLevelType','Delete Level Type')
+def deleteLevelType():
+        levelTypeNo=request.args.get('levelTypeNo')
+        if h.deleteLevelTypeX(levelTypeNo):
+            flash("Level Type was deleted")
+        else:
+            flash ("Could Not Delete Level Type",'error')
+        return redirect(url_for('manageLevels'))
+
+
+
+@app.route('/requests/types',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.RequestsTypes','Request Types')
+def manageRequests():
+    requests = [dict(r1=row[0],r2=row[1]) for row in h.gellAllReqTypes()]
+    return render_template("arhcive-requestsTypes.html",requests=requests)
+
+
+
+@app.route('/requests/types/edit',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.RequestsTypes.Edit','Edit Request Types')
+def editRequestType():
+    if request.method == 'POST':
+        form=request.form
+        TypeNo=(form['TypeNo'])
+        if (h.updateLevel(typeno)):
+            flash("Level Succsfully Updated")
+        else:
+            flash ("An error as accored trying to update the level",'error')
+    typeNo = request.args.get('typeNo')
+    reqType = [dict(r1=row[0],r2=row[1]) for row in h.getAllLevelTypeX(id)][0]
+    return render_template("editLevelType.html",levelType=levelType)
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')
 def page_not_found(e):

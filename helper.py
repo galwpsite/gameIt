@@ -47,9 +47,23 @@ class Helper():
         except pyodbc.IntegrityError:
             return False
 
+    def updateCrit (self,critNo,critName,critAmount):
+        try:
+            self.__db_cursor.execute("""EXECUTE updateCrit  ?,?,? """,critNo,critName,critAmount)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
     def deleteLevel (self,levelNo,gameNo):
         try:
             self.__db_cursor.execute("""EXECUTE deleteLevel  ?,? """,levelNo,gameNo)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+    def deleteLevelTypeX (self,x):
+        try:
+            self.__db_cursor.execute("""EXECUTE deleteLevelTypeX  ? """,x)
             return True
         except pyodbc.IntegrityError:
             return False
@@ -158,6 +172,14 @@ class Helper():
     def getNumOfDownloadInGameXatMonthY(self,x,y):
         return self.__db_cursor.execute("""EXECUTE getNumOfDownloadInGameXatMonthY ?,?""",x,y).fetchall()
 
+
+    def getPurchasesOfUserXinMonthY(self,x,y):
+        return self.__db_cursor.execute("""EXECUTE getPurchasesOfUserXinMonthY ?,?""",x,y).fetchall()
+
+
+    def getPurchasesOfUserX(self,x):
+        return self.__db_cursor.execute("""EXECUTE getPurchasesOfUserX ?""",x).fetchall()
+
     def getUsersWhoDownloadedGameX(self,x):
         return self.__db_cursor.execute("""EXECUTE getUsersWhoDownloadedGameX ?""",x).fetchall()
 
@@ -211,3 +233,15 @@ class Helper():
             return True
         except pyodbc.IntegrityError:
             return False
+
+    def getAllLevelTypes(self):
+        return self.__db_cursor.execute("EXECUTE getAllLevelTypes;").fetchall()
+
+    def gellAllReqTypes(self):
+        return self.__db_cursor.execute("EXECUTE gellAllReqTypes;").fetchall()
+
+    def getAllLevelTypeX(self,x):
+        return self.__db_cursor.execute("EXECUTE getAllLevelTypeX ? ;",x).fetchall()
+
+    def getReqTypeX(self,x):
+        return self.__db_cursor.execute("EXECUTE getReqTypeX ? ;",x).fetchall()
