@@ -444,14 +444,25 @@ def manageRequests():
 def editRequestType():
     if request.method == 'POST':
         form=request.form
-        TypeNo=(form['TypeNo'])
-        if (h.updateLevel(typeno)):
-            flash("Level Succsfully Updated")
+        typeNo=(form['TypeNo'])
+        requestName=(form['requestName'])
+        if h.updateReqTypeX(typeNo,requestName):
+            flash("Request Type Succsfully Updated")
         else:
-            flash ("An error as accored trying to update the level",'error')
+            flash ("An error as accored trying to update Request Type",'error')
     typeNo = request.args.get('typeNo')
-    reqType = [dict(r1=row[0],r2=row[1]) for row in h.getAllLevelTypeX(id)][0]
-    return render_template("editLevelType.html",levelType=levelType)
+    reqType = [dict(r1=row[0],r2=row[1]) for row in h.getReqTypeX(typeNo)][0]
+    return render_template("editRequestType.html",reqType=reqType)
+
+@app.route('/requests/types/delete',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.RequestsTypes.Delete','Delete Request Types')
+def deletereqType():
+        typeNo = request.args.get('typeNo')
+        if h.deleteReqTypeX(typeNo):
+            flash("Request Type was deleted")
+        else:
+            flash ("Could Not Delete Request Type",'error')
+        return redirect(url_for('manageRequests'))
 @app.errorhandler(404)
 @flask_breadcrumbs.register_breadcrumb(app,'.error','Page Not Found')
 def page_not_found(e):

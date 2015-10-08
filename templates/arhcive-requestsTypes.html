@@ -4,7 +4,7 @@
     <h4>Edit Existing Request Typers: </h4>
     <ul>
     {% for r in requests %}
-        <li><a href="{{ url_for('editRequestType') }}?typeNo={{ g.r1 }}">{{ r.r2 }}</a></li>
+        <li><a href="{{ url_for('editRequestType') }}?typeNo={{ r.r1 }}">{{ r.r2 }}</a></li>
     {% endfor %}
     </ul>
 

@@ -68,6 +68,14 @@ class Helper():
         except pyodbc.IntegrityError:
             return False
 
+    def deleteReqTypeX (self,x):
+        try:
+            self.__db_cursor.execute("""EXECUTE deleteReqTypeX  ? """,x)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+
     def updateLevel (self,gameNo,levelNo,star1,star2,star3,typeNo):
         try:
             self.__db_cursor.execute("""EXECUTE updateLevel  ?,?,?,?,?,?""",gameNo,levelNo,star1,star2,star3,typeNo)
@@ -230,6 +238,13 @@ class Helper():
     def addDownload(self,r1,r2,r3,r4,r5):
         try:
             self.__db_cursor.execute("""EXECUTE addDownload  ?,?,?,?,?""",r1,r2,r3,r4,r5)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+    def updateReqTypeX(self,x,requestName):
+        try:
+            self.__db_cursor.execute("""EXECUTE updateReqTypeX  ?,?""",x,requestName)
             return True
         except pyodbc.IntegrityError:
             return False
