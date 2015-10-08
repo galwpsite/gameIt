@@ -419,6 +419,15 @@ def deleteLevel():
             flash ("Could Not Delete Level",'error')
         return redirect(url_for('manageLevels'))
 
+@app.route('/home/games/delete',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Games.Delete','Delete Game')
+def deleteGame():
+        gameNo = request.args.get('gameNo')
+        if h.deleteGameX(gameNo):
+            flash("Game was deleted")
+        else:
+            flash ("Could Not Game ",'error')
+        return redirect(url_for('games'))
 @app.route('/home/levels/deleteLevelType',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Levels.DeleteLevelType','Delete Level Type')
 def deleteLevelType():
