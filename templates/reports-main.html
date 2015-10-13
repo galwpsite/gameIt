@@ -2,7 +2,7 @@
 {% block content %}
 <h1 class="title">Manage Reports </h1>
     <h4>Game Reports: </h4>
-    <ul class="reports">
+    <ol class="reports">
         <li title="ex2 q1" ><strong onclick="openReport('q1')">Level Information</strong>: <span >will show game information, level inofrmation, how many players got into the level and how many ranked it, and the avg ranking.</span></li>
         <li title="ex2 q2" ><strong onclick="openReport('q2')">Purchases Per Year</strong> <span>return for every year and every game the information about the game, new users in each year, overall summery of income </span></li>
         <li title="ex2 q3" ><strong>Friends with X game requests</strong>
@@ -50,12 +50,26 @@
                 <input type="submit" value="Open Report" onclick="openReport('q6')" />
             </form>
         </li>
-    </ul>
+        <li title="ex2 q7" class="q7" ><strong>Get games which were downloaded by X users and had purchases by amount of at least Y</strong>
+            <span>Get games which were downloaded by X users and had purchases by amount of at least Y, and the AVG play time is X*0.5 and the number of downloaded is bigger by 25% that half of the games which are in the system</strong>
+          </span>
+            <form class="hide" action="" >
+                <input class="x" type="text" name="x" placeholder="how many users? (x)" data-validation-regexp="^[0-9]*$" data-validation="custom required"/>
+                <input class="y" type="text" name="y" placeholder="how much amount of purchases ? (y)" data-validation-regexp="^[0-9]*$" data-validation="custom required"/>
+                <input type="submit" value="Open Report" onclick="openReport('q7')" />
+            </form>
+        </li>
+        <li title="ex2 q8" ><strong onclick="openReport('q8')">Users by Criteria</strong>: <span >see EX2 query 8 for info</span></li>
+
+    </ol>
     <script>
         function openReport(q) {
             switch (q){
                 case "q1":
                      window.open("{{ url_for('showReport') }}?q=1",'','width=1200,height=800');
+                    break;
+                case "q8":
+                     window.open("{{ url_for('showReport') }}?q=8",'','width=1200,height=800');
                     break;
                 case "q2":
                      window.open("{{ url_for('showReport') }}?q=2",'','width=1200,height=800');
@@ -79,6 +93,11 @@
                     var y = jQuery( ".q6 .y" ).val();
                         console.log(x)
                     window.open("{{ url_for('showReport') }}?q=6&x="+x+"&y="+y, '', 'width=1200,height=800');
+                    break;
+                case "q7":
+                    var x = jQuery( ".q7 .x" ).val();
+                    var y = jQuery( ".q7 .y" ).val();
+                    window.open("{{ url_for('showReport') }}?q=7&x="+x+"&y="+y, '', 'width=1200,height=800');
                     break;
             }
     }

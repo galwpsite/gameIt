@@ -37,6 +37,13 @@ class Helper():
         except pyodbc.IntegrityError:
             return False
 
+    def addRequestType(self,requestTypeNo,requestTypeName):
+        try:
+            self.__db_cursor.execute("""EXECUTE addRequestType  ?,? """,requestTypeNo,requestTypeName)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
     def getCriteriaByCode(self,s):
         return self.__db_cursor.execute("""EXECUTE getCriteriaByCode ? """,s).fetchall()
 
@@ -190,9 +197,17 @@ class Helper():
     def reportGetUsersWhoPlayedYLevelInGameX(self,x,y):
         return self.__db_cursor.execute("""EXECUTE reportGetUsersWhoPlayedYLevelInGameX ?, ?""",x,y).fetchall()
 
+    def reportGameWhichWereDownloadendByXUsersAndHasPurchaseByAmountOfY(self,x,y):
+        return self.__db_cursor.execute("""EXECUTE reportGameWhichWereDownloadendByXUsersAndHasPurchaseByAmountOfY
+         ?,?""",x,y).fetchall()
+
 
     def getNumOfDownloadInGameXatMonthY(self,x,y):
         return self.__db_cursor.execute("""EXECUTE getNumOfDownloadInGameXatMonthY ?,?""",x,y).fetchall()
+
+
+    def reportUserByCriteria(self):
+        return self.__db_cursor.execute("""EXECUTE reportUserByCriteriaCustom""").fetchall()
 
 
     def getPurchasesOfUserXinMonthY(self,x,y):

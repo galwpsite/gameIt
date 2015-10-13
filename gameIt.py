@@ -50,6 +50,10 @@ def showReport():
                       ,r8=row[7]) for row in h.reportPurchasePerYear() ]
             return render_template('report-q2.html',title="Level Information",rows=rows)
 
+    elif (q=='8'):
+            rows = [dict(r1=row[0],r2=row[1],r3=row[1],r4=row[3],r5=row[4],r6=row[5]) for row in h.reportUserByCriteria() ]
+            return render_template('report-q8.html',title="Users Criteira",rows=rows)
+
     elif (q=='3'):
             xval=request.args.get('x')
             rows = [dict(r1=row[0],r2=row[1],r3=row[1],r4=row[3],r5=row[4],r6=row[5]) for row in h.reportUsersWithXFriends(xval) ]
@@ -69,6 +73,11 @@ def showReport():
             rows = [dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3]) for row in h.reportGetUsersWhoPlayedYLevelInGameX(xval,yval) ]
             game=[dict(r1=row[0],r2=row[1]) for row in h.findGameByGameNo(xval)]
             return render_template('report-q6.html',title="Users who played  "+yval +" in the " + game[0].get('r2') ,rows=rows)
+    elif (q=='7'):
+            xval=request.args.get('x')
+            yval=request.args.get('y')
+            rows = [dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3],r5=row[4],r6=row[5]) for row in h.reportGameWhichWereDownloadendByXUsersAndHasPurchaseByAmountOfY(xval,yval) ]
+            return render_template('report-q7.html',title="",rows=rows)
     return render_template('reports-main.html')
 
 @app.route('/home/games',methods=['GET','POST'])
@@ -463,7 +472,7 @@ def manageRequests():
 def editRequestType():
     if request.method == 'POST':
         form=request.form
-        typeNo=(form['TypeNo'])
+        typeNo=(form['typeNo'])
         requestName=(form['requestName'])
         if h.updateReqTypeX(typeNo,requestName):
             flash("Request Type Succsfully Updated")
@@ -472,6 +481,22 @@ def editRequestType():
     typeNo = request.args.get('typeNo')
     reqType = [dict(r1=row[0],r2=row[1]) for row in h.getReqTypeX(typeNo)][0]
     return render_template("editRequestType.html",reqType=reqType)
+
+
+@app.route('/requests/types/add',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.RequestsTypes.Add','Add Request Types')
+def addRequestType():
+    if request.method == 'POST':
+        form=request.form
+        typeNo =(form['typeNo'])
+        requestName=(form['requestName'])
+        if h.addRequestType(typeNo,requestName):
+            flash("RequestType Was Added")
+            return redirect(url_for('editRequestType')+'?typeNo='+typeNo)
+        else:
+            flash ("An error as accored trying to add the level",'error')
+    return render_template("addRequestType.html")
+
 
 @app.route('/requests/types/delete',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.RequestsTypes.Delete','Delete Request Types')

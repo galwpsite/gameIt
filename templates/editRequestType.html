@@ -1,11 +1,11 @@
 {% extends "template.html" %}
 {% block content %}
-<h1 class="title">Manage Levels</h1>
-<h4>Edit level: </h4>
+<h1 class="title">Manage Requests Type</h1>
+<h4>Edit Request Type: </h4>
 <div class="row">
     <div class="column one-half">
         <form action="" method="post" class="edit">
-                    <p><label>Request Type No: </label>  <input type="text" class="id" name="TypeNo" value="{{ reqType.r1 }}"  readonly/></p>
+                    <p><label>Request Type No: </label>  <input type="text" class="id" name="typeNo" value="{{ reqType.r1 }}"  readonly/></p>
                     <p><label>Name: </label>  <input type="text" class="id" name="requestName" value="{{ reqType.r2 }}" data-validation=" required"  /></p>
             <p><input type="submit" value="Save Changes"/> </p>
             <a href="#" onclick="remove()" class="button cl-red u-full-width ">Remove </a>

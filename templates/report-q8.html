@@ -1,0 +1,27 @@
+{% extends 'report-show.html' %}
+{% block content %}
+    <table class="u-full-width">
+        <thread>
+            <th>UserNo</th>
+            <th>NickName</th>
+            <th>Registration Date</th>
+            <th>No' Of Games</th>
+            <th>Total Levels</th>
+            <th>Category</th>
+        </thread>
+        <tbody>
+            {% for r in rows %}
+                <tr>
+                    <td>{{ r.r1 }}</td>
+                    <td>{{ r.r2 }}</td>
+                    <td>{{ r.r3 }}</td>
+                    <td>{{ r.r4 }}</td>
+                    <td>{{ r.r5 }}</td>
+                    <td>{{ r.r6 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+{% endblock %}
