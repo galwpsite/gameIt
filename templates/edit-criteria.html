@@ -3,10 +3,7 @@
  <div class="row">
     <div class="columns six"><h5>{{ pageSubTitle }}</h5> <strong><a href="{{ url_for('criteriaAdd') }}" class="cl-green"><i class="fa fa-plus"></i> Add New Criteria </a></strong></div>
     <div class="columns five offset-by-one">
-         <form action="" method="post">
-            <input type="text" name="name" value="{{request.form.name }}" placeholder="Criteria Name"/>
-            <input type="submit" value="Search" name="search-form" />
-        </form>
+
     </div>
  </div>
 {% endblock %}

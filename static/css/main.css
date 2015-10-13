@@ -140,7 +140,7 @@ a.criteria:hover {
     cursor: pointer;
 }
 
-ul.reports li strong {
+ol.reports li strong {
     cursor: pointer;
 }
 th,tr,td {

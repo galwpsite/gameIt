@@ -7,7 +7,7 @@ class Helper():
     #Settings:
     connection_str ="""
     Driver={SQL Server Native Client 10.0};
-    Server=DESKTOP-SL551FH\SQLEXPRESS;
+    Server=DESKTOP-40UU08R\SQLEXPRESS;
     Database=gameIt_DBSummer;
     Trusted_Connection=yes;
     """
