@@ -51,7 +51,7 @@ def showReport():
             return render_template('report-q2.html',title="Level Information",rows=rows)
 
     elif (q=='8'):
-            rows = [dict(r1=row[0],r2=row[1],r3=row[1],r4=row[3],r5=row[4],r6=row[5]) for row in h.reportUserByCriteria() ]
+            rows = [dict(r1=row[0],r2=row[1],r3=row[2],r4=row[3],r5=row[4],r6=row[5]) for row in h.reportUserByCriteria() ]
             return render_template('report-q8.html',title="Users Criteira",rows=rows)
 
     elif (q=='3'):
