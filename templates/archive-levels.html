@@ -16,4 +16,5 @@
         <li><a href="{{url_for('editLevelType')}}?id={{ lt.r1 }}">{{ lt.r2 }}</a></li>
     {% endfor %}
     </ul>
+        <a href="{{ url_for('addLevelType') }}" class="button">Add New Level Type</a>
 {% endblock %}  

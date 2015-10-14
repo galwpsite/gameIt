@@ -385,12 +385,12 @@ def editLevel():
 def editLevelType():
     if request.method == 'POST':
         form=request.form
-        leveltypeNo=(form['leveltypeNo'])
-        name=(form['name'])
-        if (h.updateLevel(gameNo,levelNo,star1,star2,star3,typeNo)):
-            flash("Level Succsfully Updated")
+        typeNo=(form['id'])
+        typeName=(form['typeName'])
+        if h.updateLevelType(typeNo,typeName):
+            flash("Level Type Succsfully Updated")
         else:
-            flash ("An error as accored trying to update the level",'error')
+            flash ("An error as accored trying to update the level type",'error')
     id = request.args.get('id')
     levelType = [dict(r1=row[0],r2=row[1]) for row in h.getAllLevelTypeX(id)][0]
     return render_template("editLevelType.html",levelType=levelType)
@@ -416,6 +416,23 @@ def addLevel():
     games= [dict(r1=row[0],r2=row[1],r3=row[2]) for row in h.getAllGames()]
     leveltypes = [dict(r1=row[0],r2=row[1]) for row in h.getLevelTypes()]
     return render_template("addLevel.html",games=games,leveltypes=leveltypes)
+
+@app.route('/home/levels/addLevelType',methods=['GET','POST'])
+@flask_breadcrumbs.register_breadcrumb(app,'.Levels.AddLevelType','Add Level Type')
+def addLevelType():
+    if request.method == 'POST':
+        form=request.form
+        typeNo=(form['id'])
+        typeName=(form['typeName'])
+        if  h.addLevelType(typeNo,typeName):
+            flash("Level Succsfully Updated")
+            return redirect(url_for('editLevelType')+'?id='+typeNo)
+        else:
+            flash ("An error as accored trying to add the level",'error')
+
+    games= [dict(r1=row[0],r2=row[1],r3=row[2]) for row in h.getAllGames()]
+    leveltypes = [dict(r1=row[0],r2=row[1]) for row in h.getLevelTypes()]
+    return render_template("addLevelType.html",games=games,leveltypes=leveltypes)
 
 @app.route('/home/levels/deleteLevel',methods=['GET','POST'])
 @flask_breadcrumbs.register_breadcrumb(app,'.Levels.DeleteLevel','Delete Level')

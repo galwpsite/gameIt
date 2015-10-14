@@ -1,12 +1,12 @@
 {% extends "template.html" %}
 {% block content %}
 <h1 class="title">Manage Levels</h1>
-<h4>Edit level: </h4>
+<h4>Edit level Type: </h4>
 <div class="row">
     <div class="column one-half">
         <form action="" method="post" class="edit">
-                    <p><label>LevelType No: </label>  <input type="text" class="id" name="id" value="{{ levelType.r1 }}"  readonly/></p>
-                    <p><label>Name: </label>  <input type="text" class="id" name="id" value="{{ levelType.r2 }}" data-validation=" required"  /></p>
+                    <p><label>LevelType No: </label>  <input type="text" class="typeNo" name="id" value="{{ levelType.r1 }}"  readonly/></p>
+                    <p><label>Name: </label>  <input type="text" class="typeName" name="typeName" value="{{ levelType.r2 }}" data-validation=" required"  /></p>
             <p><input type="submit" value="Save Changes"/> </p>
             <a href="#" onclick="remove()" class="button cl-red u-full-width ">Remove </a>
                 </form>
@@ -19,4 +19,4 @@
                 window.open("{{ url_for('deleteLevelType') }}?levelTypeNo={{ levelType.r1 }}","_self");
     }
 </script>
-{% endblock %}  
+{% endblock %}

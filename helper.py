@@ -7,7 +7,7 @@ class Helper():
     #Settings:
     connection_str ="""
     Driver={SQL Server Native Client 10.0};
-    Server=DESKTOP-40UU08R\SQLEXPRESS;
+    Server=DESKTOP-SL551FH\SQLEXPRESS;
     Database=gameIt_DBSummer;
     Trusted_Connection=yes;
     """
@@ -104,8 +104,21 @@ class Helper():
         except pyodbc.IntegrityError:
             return False
 
-    def addLevel (self,gameNo,levelNo,star1,star2,star3,typeNo):
+    def updateLevelType (self,typeNo,typeName):
+        try:
+            self.__db_cursor.execute("""EXECUTE updateLevelType  ?,?""",typeNo,typeName)
+            return True
+        except pyodbc.IntegrityError:
+            return False
 
+    def addLevelType (self,typeNo,typeName):
+        try:
+            self.__db_cursor.execute("""EXECUTE addLevelType  ?,?""",typeNo,typeName)
+            return True
+        except pyodbc.IntegrityError:
+            return False
+
+    def addLevel (self,gameNo,levelNo,star1,star2,star3,typeNo):
         try:
             self.__db_cursor.execute("""EXECUTE addLevel  ?,?,?,?,?,?""",gameNo,levelNo,star1,star2,star3,typeNo)
             return True
