@@ -4,7 +4,7 @@
         <form action="" method="post" class="edit">
             <p><label>Criteria No: </label>  <input data-validation-regexp="^[0-9]*$" data-validation="custom required" type="text" class="id" name="id" value="{{ critNo }}"   {% if critNo !="" %} readonly  {% endif %} /></p>
             <p> <label>Name: </label> <input type="text" class="name" name="critName" value="{{ critName }}" data-validation="required length"  data-validation-length="1-33" /></p>
-            <p> <label>Amount: </label> <input type="text" class="amount" name="critAmount" value="{{ critAmount }}" data-validation="required length"  data-validation-length="1-33" /></p>
+            <p> <label>Amount: </label> <input type="text" class="amount" name="critAmount" value="{{ critAmount }}" data-validation="required length custom"   data-validation-regexp="^[0-9]*$" data-validation-length="1-33" /></p>
 
             <p><input type="submit" value="Save Changes"/> </p>
         </form>

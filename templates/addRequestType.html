@@ -5,7 +5,7 @@
 <div class="row">
     <div class="column one-half">
         <form action="" method="post" class="edit">
-                    <p><label>Request Type No: </label>  <input type="text" class="id" name="typeNo" data-validation=" required" /></p>
+                    <p><label>Request Type No: </label>  <input type="text" class="id" name="typeNo" data-validation-regexp="^[0-9]*$" data-validation=" custom required" /></p>
                     <p><label>Name: </label>  <input type="text" class="id" name="requestName" value="" data-validation=" required"  /></p>
             <p><input type="submit" value="Save Changes"/> </p>
 
